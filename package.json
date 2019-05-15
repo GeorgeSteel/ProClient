@@ -17,6 +17,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-graphql": "^0.8.0",
-    "graphql": "^14.3.0"
+    "graphql": "^14.3.0",
+    "graphql-import": "^0.7.1",
+    "graphql-tools": "^4.0.4",
+    "mongoose": "^5.5.8"
   }
 }
