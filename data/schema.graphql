@@ -22,6 +22,7 @@ enum ClientType {
 }
 type Query {
     getClient(id: ID): Client
+    getClients(limit: Int): [Client]
 }
 input OrderInput {
     product: String!
@@ -36,14 +37,18 @@ input ClientInput {
     name: String!
     lastname: String!
     company: String!
-    emails: [EmailsInput]!
+    emails: [EmailsInput]
     age: Int!
     type: ClientType!
-    orders: [OrderInput]!
+    orders: [OrderInput]
 }
 """ Mutations for create clients """
 type Mutation {
     # Resolver's name, input with data and return data
     """ Allow you to create new clients """
-    createClient(input: ClientInput) : Client 
+    createClient(input: ClientInput): Client 
+    """ Allow you to Update clients """
+    updateClient(input: ClientInput): Client
+    """ Allow you to Delete clients """
+    deleteClient(id: ID!): String
 }

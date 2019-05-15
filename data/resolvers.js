@@ -1,29 +1,53 @@
-class Client {
-    constructor(id, { name, lastname, company, emails, age, type, orders }){
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.company = company;
-        this.emails = emails;
-        this.age = age;
-        this.type = type;
-        this.orders = orders;
-    }
-}
-
-const clientsDB = {};
+import mongoose from 'mongoose';
+import { Clients } from './db';
 
 export const resolvers = {
     Query: {
-        getClient: ({id}) => {
-            return new Client(id, clientsDB[id]);
+        getClient: async (root, {id}) => {
+            try {
+                return await Clients.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getClients: async (root, {limit}) => {
+            try {
+                return await Clients.find({}).limit(limit);
+            } catch (error) {
+                throw new Error(error);
+            }
         }
     },
     Mutation: {
-        createClient: (tmp, {input}) => {
-            const id = require('crypto').randomBytes(10).toString('hex');
-            clientsDB[id] = input;
-            return new Client(id, input);
+        createClient: async (root, {input}) => {            
+            try {
+                return await Clients.create({
+                    name: input.name,
+                    lastname: input.lastname,
+                    company : input.company,
+                    emails: input.emails,
+                    age: input.age,
+                    type: input.type,
+                    orders: input.orders
+                }); 
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        updateClient: async (root, {input}) => {
+            try {
+                return await Clients.findOneAndUpdate({ _id: input.id}, input, {new: true});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        deleteClient: async (root, {id}) => {
+            try {
+                await Clients.findOneAndRemove({ _id: id});
+                return "It has been deleted";
+            } catch (error) {
+                throw new Error(error);                
+            }
         }
     }
 }
