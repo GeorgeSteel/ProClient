@@ -17,7 +17,7 @@ type Order {
 }
 """ Gives a category of the client """
 enum ClientType {
-    BASIC
+    BASICO
     PREMIUM
 }
 type Query {

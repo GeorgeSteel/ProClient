@@ -10,3 +10,14 @@ export const CLIENTS_QUERY = gql`{
   }
 
 }`;
+
+export const NEW_CLIENT_MUTATION = gql`
+  mutation createClient($input: ClientInput) {
+    createClient(input: $input) {
+      id
+      name
+      lastname
+      age
+    }
+  }
+`;

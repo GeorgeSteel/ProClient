@@ -4,8 +4,8 @@ import { CLIENTS_QUERY } from '../queries/Clients';
 import { Link } from 'react-router-dom';
 
 const Clients = () => (
-    <Query query={ CLIENTS_QUERY }>
-        {({ loading, error, data }) => {
+    <Query query={ CLIENTS_QUERY } pollInterval={1000}>
+        {({ loading, error, data, startPolling, stopPolling }) => {
             if(loading) return 'Loading...';
             if(error) return `Error ${error.message}`;
 
