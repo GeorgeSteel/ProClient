@@ -50,3 +50,8 @@ export const UPDATE_CLIENT_MUTATION = gql`
       }
     }
   }`;
+
+export const DELETE_CLIENT_MUTATION = gql`
+  mutation deleteClient($id: ID!) {
+    deleteClient(id: $id) 
+}`;
