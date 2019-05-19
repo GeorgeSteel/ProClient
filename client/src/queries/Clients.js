@@ -19,5 +19,34 @@ export const NEW_CLIENT_MUTATION = gql`
       lastname
       age
     }
-  }
-`;
+  }`;
+
+export const GET_CLIENT_QUERY = gql`
+  query getClient($id: ID) {
+    getClient(id: $id) {
+      id
+      company
+      name
+      lastname
+      age
+      type
+      emails{
+        email
+      }
+    }
+  }`;
+
+export const UPDATE_CLIENT_MUTATION = gql`
+  mutation updateClient($input: ClientInput) {
+    updateClient(input: $input) {
+    	id
+      company
+      name
+      lastname
+      age
+      type
+      emails{
+        email
+      }
+    }
+  }`;

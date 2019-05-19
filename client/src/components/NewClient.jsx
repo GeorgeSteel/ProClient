@@ -69,7 +69,7 @@ export default class NewClient extends Component {
                     <Mutation 
                         mutation={ NEW_CLIENT_MUTATION }
                         onCompleted={ () => this.props.history.push('/') }
-                        >
+                    >
                     { createClient => (
                         <form className="col-md-8 m-3" onSubmit={ (e) => {
                             e.preventDefault();
