@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 
-export const CLIENTS_QUERY = gql`{
-    
-  getClients{
-    id
-    name
-    lastname
-    company
-  }
-
-}`;
+export const CLIENTS_QUERY = gql`    
+  query getClients($limit: Int, $offset: Int) {
+    getClients(limit: $limit, offset: $offset){
+      id
+      name
+      lastname
+      company
+    }
+    totalClients
+  }`;
 
 export const NEW_CLIENT_MUTATION = gql`
   mutation createClient($input: ClientInput) {

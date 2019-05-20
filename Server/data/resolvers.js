@@ -10,9 +10,16 @@ export const resolvers = {
                 throw new Error(error);
             }
         },
-        getClients: async (root, {limit}) => {
+        getClients: async (root, {limit, offset}) => {
             try {
-                return await Clients.find({}).limit(limit);
+                return await Clients.find({}).limit(limit).skip(offset);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        totalClients: async (root) => {
+            try {
+                return await Clients.countDocuments({});
             } catch (error) {
                 throw new Error(error);
             }
