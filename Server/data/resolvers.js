@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Clients } from './db';
+import { Products } from './db';
 
 export const resolvers = {
     Query: {
@@ -23,6 +24,20 @@ export const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        getProducts: async (root, {limit, offset}) => {
+            try {
+                return await Products.find({}).limit(limit).skip(offset);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getProduct: async (root, {id}) => {
+            try {
+                return await Products.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
         }
     },
     Mutation: {
@@ -31,7 +46,7 @@ export const resolvers = {
                 return await Clients.create({
                     name: input.name,
                     lastname: input.lastname,
-                    company : input.company,
+                    company: input.company,
                     emails: input.emails,
                     age: input.age,
                     type: input.type,
@@ -51,6 +66,32 @@ export const resolvers = {
         deleteClient: async (root, {id}) => {
             try {
                 await Clients.findOneAndRemove({ _id: id});
+                return "It has been deleted";
+            } catch (error) {
+                throw new Error(error);                
+            }
+        },
+        addProduct: async (root, {input}) => {
+            try {
+                return await Products.create({
+                    name: input.name,
+                    price: input.price,
+                    stock: input.stock
+                }); 
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        updateProduct: async (root, {input}) => {
+            try {
+                return await Products.findOneAndUpdate({ _id: input.id}, input, {new: true});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        deleteProduct: async (root, {id}) => {
+            try {
+                await Products.findOneAndRemove({ _id: id});
                 return "It has been deleted";
             } catch (error) {
                 throw new Error(error);                

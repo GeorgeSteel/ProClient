@@ -15,15 +15,29 @@ type Order {
     product: String
     price: Float
 }
+type Product {
+    id: ID
+    name: String!
+    price: Float!
+    stock: Int!
+}
 """ Gives a category of the client """
 enum ClientType {
     BASICO
     PREMIUM
 }
 type Query {
+    # Clients
+    """ It gets a single client """
     getClient(id: ID): Client
+    """ It gets all the clients """
     getClients(limit: Int, offset: Int): [Client]
     totalClients: String
+    # Products
+    """ It gets all the products """
+    getProducts(limit: Int, offset: Int): [Product]
+    """ It gets a single product """
+    getProduct(id: ID!): Product
 }
 input OrderInput {
     product: String!
@@ -43,13 +57,30 @@ input ClientInput {
     type: ClientType!
     orders: [OrderInput]
 }
+
+""" Fields for new products """
+input ProductInput {
+    id: ID
+    name: String!,
+    price: Float!,
+    stock: Int!
+}
+
 """ Mutations for create clients """
 type Mutation {
     # Resolver's name, input with data and return data
+    # Clients
     """ Allow you to create new clients """
     createClient(input: ClientInput): Client 
     """ Allow you to Update clients """
     updateClient(input: ClientInput): Client
     """ Allow you to Delete clients """
     deleteClient(id: ID!): String
+    # Products
+    """ Creates a new product """
+    addProduct(input: ProductInput): Product
+    """ Updates a Product """
+    updateProduct(input: ProductInput): Product
+    """ Deletes a Product """
+    deleteProduct(id: ID!): String
 }
