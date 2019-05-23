@@ -23,7 +23,17 @@ const productsSchema = new mongoose.Schema({
 });
 const Products = mongoose.model('products', productsSchema);
 
+const ordersSchema = new mongoose.Schema({
+    order: Array,
+    total: Number,
+    date: Date,
+    client: String,
+    status: String
+});
+const Orders = mongoose.model('orders', ordersSchema);
+
 export {
     Clients,
-    Products
+    Products,
+    Orders
 };

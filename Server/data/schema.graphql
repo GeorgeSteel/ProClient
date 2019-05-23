@@ -6,14 +6,9 @@ type Client{
     emails: [Emails]
     age: Int
     type: ClientType
-    orders: [Order]
 }
 type Emails {
     email: String
-}
-type Order {
-    product: String
-    price: Float
 }
 type Product {
     id: ID
@@ -42,10 +37,6 @@ type Query {
     """ It counts all the products """
     totalProducts: String
 }
-input OrderInput {
-    product: String!
-    price: Float!
-}
 input EmailsInput {
     email: String!
 }
@@ -69,6 +60,38 @@ input ProductInput {
     stock: Int!
 }
 
+""" Fields for new orders """
+type Order {
+    id: ID
+    order: [OrdersArrayType]
+    total: Float
+    date: String
+    client: ID
+    status: StatusType
+}
+type OrdersArrayType {
+    id: ID
+    quantity: Int
+}
+input OrderInput {
+    id: ID
+    order: [OrdersArray]
+    total: Float
+    date: String
+    client: ID
+    status: StatusType
+}
+input OrdersArray {
+    id: ID
+    quantity: Int
+}
+""" Gives a status of the order """
+enum StatusType {
+    PENDIENTE
+    COMPLETADO
+    CANCELADO
+}
+
 """ Mutations for create clients """
 type Mutation {
     # Resolver's name, input with data and return data
@@ -86,4 +109,7 @@ type Mutation {
     updateProduct(input: ProductInput): Product
     """ Deletes a Product """
     deleteProduct(id: ID!): String
+    # Orders
+    """ Add a new Order """
+    addOrder(input: OrderInput): Order
 }

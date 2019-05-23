@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-import { Clients } from './db';
-import { Products } from './db';
+import { Clients, Products, Orders } from './db';
 
 export const resolvers = {
     Query: {
@@ -56,8 +55,7 @@ export const resolvers = {
                     company: input.company,
                     emails: input.emails,
                     age: input.age,
-                    type: input.type,
-                    orders: input.orders
+                    type: input.type
                 }); 
             } catch (error) {
                 throw new Error(error);
@@ -73,7 +71,7 @@ export const resolvers = {
         deleteClient: async (root, {id}) => {
             try {
                 await Clients.findOneAndRemove({ _id: id});
-                return "El producto se ha eliminado correctamente";
+                return "El cliente se ha eliminado correctamente";
             } catch (error) {
                 throw new Error(error);                
             }
@@ -99,9 +97,31 @@ export const resolvers = {
         deleteProduct: async (root, {id}) => {
             try {
                 await Products.findOneAndRemove({ _id: id});
-                return "Ha sido eliminado satisfactoriamente";
+                return "El producto ha sido eliminado satisfactoriamente";
             } catch (error) {
                 throw new Error(error);                
+            }
+        },
+        addOrder: async (root, {input}) => {
+            try {
+                input.order.forEach(order => {
+                    Products.updateOne({ _id: order.id }, {
+                        "$inc": { "stock": -order.quantity }
+                    }, function (err) {
+                            if(err) return new Error(err);
+                        }
+                    );
+                });
+
+                return await Orders.create({
+                    order: input.order,
+                    total: input.total,
+                    date: new Date(),
+                    client: input.client,
+                    status: "PENDIENTE"
+                });         
+            } catch (error) {
+                throw new Error(error);
             }
         }
     }
