@@ -31,7 +31,7 @@ export default class App extends Component {
             <Header/>
             <div className="container">
               <Switch>
-                <Route exact path="/" component={ Clients }/>
+                <Route exact path="/clientes" component={ Clients }/>
                 <Route exact path="/cliente/nuevo" component={ NewClient }/>
                 <Route exact path="/cliente/editar/:id" component={ UpdateClient }/>
                 <Route exact path="/producto/nuevo" component={ NewProduct }/>

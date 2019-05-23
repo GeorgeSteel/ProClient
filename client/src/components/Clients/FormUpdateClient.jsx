@@ -57,7 +57,7 @@ class FormUpdate extends Component {
             <Mutation 
                 mutation={ UPDATE_CLIENT_MUTATION }
                 onCompleted={ () => this.props.refetch().then(() => {
-                    this.props.history.push('/');
+                    this.props.history.push('/clientes');
                 }) }
             >
                 { updateClient => (         
