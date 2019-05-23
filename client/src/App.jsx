@@ -3,10 +3,13 @@ import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
-import Header from './components/Header';
-import Clients from './components/Clients';
-import NewClient from './components/NewClient';
-import UpdateClient from './components/UpdateClient';
+import Header from './components/Layout/Header';
+import Clients from './components/Clients/Clients';
+import NewClient from './components/Clients/NewClient';
+import UpdateClient from './components/Clients/UpdateClient';
+import NewProduct from './components/Products/NewProduct';
+import Products from './components/Products/Products';
+import UpdateProduct from './components/Products/UpdateProduct';
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -28,9 +31,12 @@ export default class App extends Component {
             <Header/>
             <div className="container">
               <Switch>
-                <Route exact path="/" component={Clients}/>
-                <Route exact path="/cliente/nuevo" component={NewClient}/>
-                <Route exact path="/cliente/editar/:id" component={UpdateClient}/>
+                <Route exact path="/" component={ Clients }/>
+                <Route exact path="/cliente/nuevo" component={ NewClient }/>
+                <Route exact path="/cliente/editar/:id" component={ UpdateClient }/>
+                <Route exact path="/producto/nuevo" component={ NewProduct }/>
+                <Route exact path="/productos" component={ Products }/>
+                <Route exact path="/producto/editar/:id" component={ UpdateProduct }/>
               </Switch>
             </div>
           </Fragment>

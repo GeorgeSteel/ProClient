@@ -32,12 +32,15 @@ type Query {
     getClient(id: ID): Client
     """ It gets all the clients """
     getClients(limit: Int, offset: Int): [Client]
+    """ It counts all the clients """
     totalClients: String
     # Products
     """ It gets all the products """
     getProducts(limit: Int, offset: Int): [Product]
     """ It gets a single product """
     getProduct(id: ID!): Product
+    """ It counts all the products """
+    totalProducts: String
 }
 input OrderInput {
     product: String!

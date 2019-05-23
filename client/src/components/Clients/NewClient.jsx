@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { NEW_CLIENT_MUTATION } from '../queries/Clients';
+import { NEW_CLIENT_MUTATION } from '../../queries/Clients';
 import { Mutation } from 'react-apollo';
 
 export default class NewClient extends Component {

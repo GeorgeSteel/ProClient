@@ -38,6 +38,13 @@ export const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        totalProducts: async (root) => {
+            try {
+                return await Products.countDocuments({});
+            } catch (error) {
+                throw new Error(error);
+            }
         }
     },
     Mutation: {
@@ -66,7 +73,7 @@ export const resolvers = {
         deleteClient: async (root, {id}) => {
             try {
                 await Clients.findOneAndRemove({ _id: id});
-                return "It has been deleted";
+                return "El producto se ha eliminado correctamente";
             } catch (error) {
                 throw new Error(error);                
             }
@@ -92,7 +99,7 @@ export const resolvers = {
         deleteProduct: async (root, {id}) => {
             try {
                 await Products.findOneAndRemove({ _id: id});
-                return "It has been deleted";
+                return "Ha sido eliminado satisfactoriamente";
             } catch (error) {
                 throw new Error(error);                
             }

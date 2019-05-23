@@ -1,17 +1,23 @@
 import React, { Fragment, Component } from 'react';
-import { Query, Mutation } from 'react-apollo';
-import { CLIENTS_QUERY, DELETE_CLIENT_MUTATION } from '../queries/Clients';
 import { Link } from 'react-router-dom';
-import Pagination from './Pagination';
 
-export default class Clients extends Component {
-    
+import { Query, Mutation } from 'react-apollo';
+import { CLIENTS_QUERY, DELETE_CLIENT_MUTATION } from '../../queries/Clients';
+
+import Pagination from '../Pagination';
+import Success from '../Alerts/Success';
+
+export default class Clients extends Component {    
     limit = 10;
 
     state = {
         pagination: {
             offset: 0,
             currentPage: 1
+        },
+        alert: {
+            show: false,
+            message: ''
         }
     }
 
@@ -34,8 +40,10 @@ export default class Clients extends Component {
     }
 
     render() {
+        const { alert: { show, message } } = this.state,
+                alert = (show) ? <Success message={ message } /> : null;
         return(
-            <Query query={ CLIENTS_QUERY } pollInterval={1000} variables={{ limit: this.state.pagination.limit, offset: this.state.pagination.offset }}>
+            <Query query={ CLIENTS_QUERY } pollInterval={1000} variables={{ limit: this.limit, offset: this.state.pagination.offset }}>
                 {({ loading, error, data, startPolling, stopPolling }) => {
                     if(loading) return 'Loading...';
                     if(error) return `Error ${error.message}`;
@@ -43,6 +51,9 @@ export default class Clients extends Component {
                     return(
                         <Fragment>
                             <h2 className="text-center">Lista Clientes</h2>
+
+                            { alert }
+
                             <ul className="list-group mt-4">
                                 { data.getClients.map(client => {
                                     const { id } = client;
@@ -53,7 +64,26 @@ export default class Clients extends Component {
                                                     { client.name } { client.lastname } - { client.company }
                                                 </div>
                                                 <div className="col-md-4 d-flex justify-content-end">
-                                                    <Mutation mutation={ DELETE_CLIENT_MUTATION }>
+                                                    <Mutation 
+                                                        mutation={ DELETE_CLIENT_MUTATION }
+                                                        onCompleted={(data) => {
+                                                            this.setState({
+                                                                alert: {
+                                                                    show: true,
+                                                                    message: data.deleteClient
+                                                                }
+                                                            }, () => {
+                                                                setTimeout(() => {
+                                                                    this.setState({
+                                                                        alert: {
+                                                                            show: false,
+                                                                            message: ''
+                                                                        }
+                                                                    })
+                                                                }, 3000);
+                                                            });
+                                                        }}    
+                                                    >
                                                         {deleteClient => (
                                                             <button 
                                                                 type="button" 
@@ -82,7 +112,7 @@ export default class Clients extends Component {
                             </ul>
                             <Pagination
                                 pagination={ this.state.pagination }
-                                totalClients={ data.totalClients }
+                                total={ data.totalClients }
                                 previousPage={ this.previousPage }
                                 nextPage={ this.nextPage }
                                 limit={ this.limit }

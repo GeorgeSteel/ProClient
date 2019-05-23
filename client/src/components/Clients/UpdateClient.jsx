@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { GET_CLIENT_QUERY } from '../queries/Clients';
+import { GET_CLIENT_QUERY } from '../../queries/Clients';
 import { Query } from 'react-apollo';
 import FormUpdate from './FormUpdateClient';
 
