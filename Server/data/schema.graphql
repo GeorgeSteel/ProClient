@@ -31,7 +31,7 @@ type Query {
     totalClients: String
     # Products
     """ It gets all the products """
-    getProducts(limit: Int, offset: Int): [Product]
+    getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
     """ It gets a single product """
     getProduct(id: ID!): Product
     """ It counts all the products """

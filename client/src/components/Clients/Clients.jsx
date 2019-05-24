@@ -60,14 +60,19 @@ export default class Clients extends Component {
                                     return(
                                         <li key={ id } className="list-group-item">
                                             <div className="row justify-content-between align-items-center">
-                                                <div className="col-md-7 d-flex justify-content-between align-items-center">
+                                                <div className="col-md-6 d-flex justify-content-between align-items-center">
                                                     { client.name } { client.lastname } - { client.company }
                                                 </div>
-                                                <div className="col-md-5 d-flex justify-content-end">
+                                                <div className="col-md-6 d-flex justify-content-end">
                                                     <Link 
                                                         to={`/pedido/nuevo/${id}`}
                                                         className="btn btn-warning d-block d-md-inline-block mr-2"
                                                     >&#43; Nuevo Pedido
+                                                    </Link>
+                                                    <Link 
+                                                        to={`/pedidos/${id}`}
+                                                        className="btn btn-info d-block d-md-inline-block mr-2"
+                                                    >Ver Pedidos
                                                     </Link>
                                                     <Mutation 
                                                         mutation={ DELETE_CLIENT_MUTATION }

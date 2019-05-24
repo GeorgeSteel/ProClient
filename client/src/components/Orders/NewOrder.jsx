@@ -22,8 +22,8 @@ export default class NewOrder extends Component {
                         />
                     </div>
                     <div className="col-md-9">
-                        <Query query={ GET_PRODUCTS_QUERY }>
-                        {({ loading, error, data, startPolling, stopPolling }) => {
+                        <Query query={ GET_PRODUCTS_QUERY } variables={{ stock: true }}>
+                        {({ loading, error, data, refetch, startPolling, stopPolling }) => {
                             if(loading) return <Loader/>;
                             if(error) return `Error ${error.message}`;
 
@@ -31,6 +31,7 @@ export default class NewOrder extends Component {
                                 <OrderContent
                                     id={ id }
                                     products={ data.getProducts }
+                                    refetch={ refetch }
                                 />
                             );
                         }}

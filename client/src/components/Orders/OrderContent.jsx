@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/lib/animated';
 import Summary from './Summary';
+import GenerateOrder from './GenerateOrder';
+import Failed from '../Alerts/Failed';
 
 export default class OrderContent extends Component {
     state = {
@@ -44,12 +46,17 @@ export default class OrderContent extends Component {
         this.setState({ products: remaining }, () => this.updateTotal());
     }
 
+
     render() {
+        const products = this.state.products,
+            generateBtn = (products.length !== 0) ? <GenerateOrder order={this.state} idClient={this.props.id} refetch={this.props.refetch} /> : null,
+            message = (this.state.total < 0) ? <Failed message="Las cantidades no pueden ser negativas" /> : null;
         return (
             <Fragment>
                 <h2 className="text-center mb-5">
                     Seleccionar Artículos
                 </h2>
+                { message }
                 <Select
                     closeMenuOnSelect={false}
                     components={makeAnimated()}
@@ -70,6 +77,7 @@ export default class OrderContent extends Component {
                     Total:
                     <span className="font-weight-normal"> ${ this.state.total }</span>
                 </p>
+                { generateBtn }
             </Fragment>
         )
     }

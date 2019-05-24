@@ -24,9 +24,15 @@ export const resolvers = {
                 throw new Error(error);
             }
         },
-        getProducts: async (root, {limit, offset}) => {
+        getProducts: async (root, {limit, offset, stock}) => {
             try {
-                return await Products.find({}).limit(limit).skip(offset);
+                let filter;
+                
+                if (stock) {
+                    filter = { stock: { $gt: 0 } }
+                }
+                
+                return await Products.find(filter).limit(limit).skip(offset);
             } catch (error) {
                 throw new Error(error);
             }
