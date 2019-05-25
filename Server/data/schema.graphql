@@ -83,6 +83,9 @@ type OrdersArrayType {
     id: ID
     quantity: Int
 }
+type Token {
+    token: String!
+}
 input OrderInput {
     id: ID
     order: [OrdersArray]
@@ -122,6 +125,10 @@ type Mutation {
     # Orders
     """ Add a new Order """
     addOrder(input: OrderInput): Order
-    """ Update the status """
+    """ Update the status order """
     updateStatus(input: OrderInput): String
+    # Users 
+    """ Creates a new user """
+    createUser(user: String!, password: String!): String
+    authUser(user: String!, password: String!): Token
 }

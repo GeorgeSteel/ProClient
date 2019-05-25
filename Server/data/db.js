@@ -32,8 +32,15 @@ const ordersSchema = new mongoose.Schema({
 });
 const Orders = mongoose.model('orders', ordersSchema);
 
+const userSchema = new mongoose.Schema({
+    user: String,
+    password: String
+});
+const Users = mongoose.model('users', userSchema);
+
 export {
     Clients,
     Products,
-    Orders
+    Orders,
+    Users
 };

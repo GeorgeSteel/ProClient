@@ -1,5 +1,16 @@
 import mongoose from 'mongoose';
-import { Clients, Products, Orders } from './db';
+import { Clients, Products, Orders, Users } from './db';
+
+import bcrypt from 'bcrypt';
+// Generate token
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+dotenv.config({ path: 'variables.env' });
+const createToken = (name, secret, expiresIn) => {
+    const { user } = name;
+    return jwt.sign({ user }, secret, { expiresIn });
+}
 
 export const resolvers = {
     Query: {
@@ -183,6 +194,36 @@ export const resolvers = {
                 return "El pedido ha sido actualizado satisfactoriamente";
             } catch (error) {
                 throw new Error(error);                
+            }
+        },
+        createUser: async (root, {user, password}) => {
+            try {
+                const userExists = await Users.findOne({ user });
+                if(userExists) throw new Error(`El usuario ${ user } ya existe`);
+
+                await Users.create({
+                    user,
+                    password: bcrypt.hashSync(password, 10)
+                });
+                
+                return 'El nuevo usuario ha sido creado';
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        authUser: async (root, {user, password}) => {
+            try {
+                const userExists = await Users.findOne({ user });
+                if (!userExists) throw new Error(`Usuario NO existe`);
+                
+                const correctPassword = await bcrypt.compare(password, userExists.password);
+                if (!correctPassword) throw new Error(`Password Incorrecto`);
+
+                return {
+                    token: createToken(userExists, process.env.SECRET, '1hr')
+                };
+            } catch (error) {
+                throw new Error(error);
             }
         }
     }
