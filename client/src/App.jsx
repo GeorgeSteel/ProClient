@@ -12,6 +12,7 @@ import Products from './components/Products/Products';
 import UpdateProduct from './components/Products/UpdateProduct';
 import NewOrder from './components/Orders/NewOrder';
 import ClientOrders from './components/Orders/ClientOrders';
+import Panel from './components/Panel/Panel';
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -41,6 +42,7 @@ export default class App extends Component {
                 <Route exact path="/producto/editar/:id" component={ UpdateProduct }/>
                 <Route exact path="/pedido/nuevo/:id" component={ NewOrder }/>
                 <Route exact path="/pedidos/:id" component={ ClientOrders }/>
+                <Route exact path="/panel" component={ Panel }/>
               </Switch>
             </div>
           </Fragment>

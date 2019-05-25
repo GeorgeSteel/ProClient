@@ -9,6 +9,7 @@ import { DELETE_PRODUCTS_MUTATION } from '../../queries/Products';
 
 import Success from '../Alerts/Success';
 import Pagination from '../Pagination';
+import Loader from '../Layout/Loader';
 
 export default class Products extends Component {
     limit = 10;
@@ -55,7 +56,7 @@ export default class Products extends Component {
 
                 <Query query={ GET_PRODUCTS_QUERY } pollInterval={1000} variables={{ limit: this.limit, offset: this.state.pagination.offset }}>
                 {({ loading, error, data, startPolling, stopPolling }) => {
-                    if(loading) return 'Loading...';
+                    if(loading) return <Loader/>;
                     if(error) return `Error ${error.message}`;
 
                     return(
@@ -71,13 +72,21 @@ export default class Products extends Component {
                                 </thead>
                                 <tbody>
                                     { data.getProducts.map(product => {
-                                        const { id } = product;
+                                        const { id, stock, price, name } = product;
+
+                                        let styles;
+
+                                        if (stock <= 10) {
+                                            styles = 'table-danger text-light';
+                                        } else if (stock > 10 && stock <= 30) {
+                                            styles = 'table-warning text-light';                                            
+                                        }
 
                                         return(
-                                        <tr key={ id }>
-                                            <td>{ product.name }</td>
-                                            <td>$ { product.price }</td>
-                                            <td>{ product.stock }</td>
+                                        <tr key={ id } className={ styles }>
+                                            <td>{ name }</td>
+                                            <td>$ { price }</td>
+                                            <td>{ stock }</td>
                                             <td>
                                                 <Link 
                                                     to={`producto/editar/${id}`} 

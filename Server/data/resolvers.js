@@ -50,6 +50,44 @@ export const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        getOrders: async (root, {client}) => {
+            try {
+                return await Orders.find({ client: client });
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        topClients: async (root) => {
+            try {
+                return await Orders.aggregate([
+                    {
+                      $match: { status: "COMPLETADO" }
+                    },
+                    {
+                      $group: { 
+                          _id: "$client",
+                          total: { $sum: "$total" }
+                      }
+                    },
+                    {
+                      $lookup: {
+                          from: 'clients',
+                          localField: '_id',
+                          foreignField: '_id',
+                          as: 'client'
+                      }
+                    },
+                    {
+                      $sort: { total: -1 }
+                    },
+                    {
+                      $limit: 10
+                    },
+                  ]);
+            } catch (error) {
+                throw new Error(error);
+            }
         }
     },
     Mutation: {
@@ -110,15 +148,6 @@ export const resolvers = {
         },
         addOrder: async (root, {input}) => {
             try {
-                input.order.forEach(order => {
-                    Products.updateOne({ _id: order.id }, {
-                        "$inc": { "stock": -order.quantity }
-                    }, function (err) {
-                            if(err) return new Error(err);
-                        }
-                    );
-                });
-
                 return await Orders.create({
                     order: input.order,
                     total: input.total,
@@ -128,6 +157,32 @@ export const resolvers = {
                 });         
             } catch (error) {
                 throw new Error(error);
+            }
+        },
+        updateStatus: async (root, {input}) => {
+            try {
+                const { status } = input;
+                let instruction;
+
+                if (status === 'COMPLETADO') {
+                    instruction = '-';
+                } else if (status === 'CANCELADO') {
+                    instruction = '+';                    
+                }
+
+                input.order.forEach(order => {
+                    Products.updateOne({ _id: order.id }, {
+                        "$inc": { "stock": `${ instruction }${ order.quantity }` }
+                    }, function (err) {
+                            if(err) return new Error(err);
+                        }
+                    );
+                });
+
+                await Orders.findOneAndUpdate({ _id: input.id}, input, {new: true});
+                return "El pedido ha sido actualizado satisfactoriamente";
+            } catch (error) {
+                throw new Error(error);                
             }
         }
     }

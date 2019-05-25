@@ -27,7 +27,7 @@ const ordersSchema = new mongoose.Schema({
     order: Array,
     total: Number,
     date: Date,
-    client: String,
+    client: mongoose.Types.ObjectId,
     status: String
 });
 const Orders = mongoose.model('orders', ordersSchema);

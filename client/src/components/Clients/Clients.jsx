@@ -5,6 +5,7 @@ import { Query, Mutation } from 'react-apollo';
 import { CLIENTS_QUERY, DELETE_CLIENT_MUTATION } from '../../queries/Clients';
 
 import Pagination from '../Pagination';
+import Loader from '../Layout/Loader';
 import Success from '../Alerts/Success';
 
 export default class Clients extends Component {    
@@ -45,7 +46,7 @@ export default class Clients extends Component {
         return(
             <Query query={ CLIENTS_QUERY } pollInterval={1000} variables={{ limit: this.limit, offset: this.state.pagination.offset }}>
                 {({ loading, error, data, startPolling, stopPolling }) => {
-                    if(loading) return 'Loading...';
+                    if(loading) return <Loader/>;
                     if(error) return `Error ${error.message}`;
 
                     return(
