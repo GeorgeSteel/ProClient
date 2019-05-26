@@ -20,6 +20,10 @@ type TotalClient {
     total: Float
     client: [Client]
 }
+type TotalSeller {
+    total: Float
+    seller: [User]
+}
 type User {
     id: ID
     user: String
@@ -39,7 +43,7 @@ type Query {
     """ It gets all the clients """
     getClients(limit: Int, offset: Int, seller: String): [Client]
     """ It counts all the clients """
-    totalClients: String
+    totalClients(seller: String): String
     # Products
     """ It gets all the products """
     getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
@@ -52,6 +56,7 @@ type Query {
     getOrders(client: String): [Order]
     # Charts
     topClients: [TotalClient]
+    topSellers: [TotalSeller]
     # Users
     getUser: User
 }
@@ -102,6 +107,7 @@ input OrderInput {
     date: String
     client: ID
     status: StatusType
+    seller: ID
 }
 input OrdersArray {
     id: ID

@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { ApolloConsumer } from 'react-apollo';
+
 // Components
 import Header from './components/Layout/Header';
 import Clients from './components/Clients/Clients';
@@ -15,9 +17,23 @@ import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Session from './components/Session';
 import PrivateRoute from './components/PrivateRoute';
+import Failed from './components/Alerts/Failed';
 
 const App = ({ refetch, session }) => {
-  const { getUser } = session;
+  let getUser;
+  if (!session) {
+    return(
+      <ApolloConsumer>
+        { client => {
+          localStorage.removeItem('token', '');
+          client.resetStore();
+          return <Redirect to="/login"/>;
+        } }
+      </ApolloConsumer>
+    );
+  } else {
+    getUser = session.getUser;
+  }
   return (    
       <Router>
         <Fragment>
@@ -31,11 +47,12 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/producto/nuevo" component={ NewProduct }/>
               <PrivateRoute exact path="/productos" component={ Products }/>
               <PrivateRoute exact path="/producto/editar/:id" component={ UpdateProduct }/>
-              <PrivateRoute exact path="/pedido/nuevo/:id" component={ NewOrder }/>
+              <PrivateRoute exact path="/pedido/nuevo/:id" component={ NewOrder } session={ getUser }/>
               <PrivateRoute exact path="/pedidos/:id" component={ ClientOrders }/>
               <PrivateRoute exact path="/panel" component={ Panel }/>
               <PrivateRoute exact path="/registro" component={ Register } session={ getUser }/>
               <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
+              <Route render={ () => <Failed message="La ruta a la que intentas acceder no existe" /> }/>
             </Switch>
           </div>
         </Fragment>

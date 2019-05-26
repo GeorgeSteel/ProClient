@@ -33,9 +33,11 @@ export const resolvers = {
                 throw new Error(error);
             }
         },
-        totalClients: async (root) => {
+        totalClients: async (root, {seller}) => {
             try {
-                return await Clients.countDocuments({});
+                let filter;
+                if (seller) filter = { seller: new ObjectId(seller) };
+                return await Clients.countDocuments(filter);
             } catch (error) {
                 throw new Error(error);
             }
@@ -99,7 +101,7 @@ export const resolvers = {
                     },
                     {
                       $limit: 10
-                    },
+                    }
                   ]);
             } catch (error) {
                 throw new Error(error);
@@ -110,6 +112,37 @@ export const resolvers = {
                 if (!currentUser) return null;
 
                 return await Users.findOne({ user: currentUser.user });
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        topSellers: async (root) => {
+            try {
+                return await Orders.aggregate([
+                    {
+                        $match: { status: "COMPLETADO" }
+                    },
+                    {
+                        $group: { 
+                            _id: "$seller",
+                            total: { $sum: "$total" }
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'users',
+                            localField: '_id',
+                            foreignField: '_id',
+                            as: 'seller'
+                        }
+                    },
+                    {
+                        $sort: { total: -1 }
+                    },
+                    {
+                        $limit: 10
+                    }
+                  ]);
             } catch (error) {
                 throw new Error(error);
             }
@@ -179,7 +212,8 @@ export const resolvers = {
                     total: input.total,
                     date: new Date(),
                     client: input.client,
-                    status: "PENDIENTE"
+                    status: "PENDIENTE",
+                    seller: input.seller
                 });         
             } catch (error) {
                 throw new Error(error);
@@ -237,7 +271,7 @@ export const resolvers = {
                 if (!correctPassword) throw new Error(`Password Incorrecto`);
 
                 return {
-                    token: createToken(userExists, process.env.SECRET, '2hr')
+                    token: createToken(userExists, process.env.SECRET, '1hr')
                 };
             } catch (error) {
                 throw new Error(error);

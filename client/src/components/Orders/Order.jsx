@@ -8,6 +8,8 @@ import { Mutation } from 'react-apollo';
 import Loader from '../Layout/Loader';
 import SummaryProduct from './SummaryProduct';
 
+import '../assets/css/orders.css';
+
 const Order = ({ order: { id, order, date, total, status }, client }) => {
     const translatedDate = new Date(Number(date));
 
@@ -39,7 +41,6 @@ const Order = ({ order: { id, order, date, total, status }, client }) => {
                                         status: e.target.value,
                                         client
                                     };
-                                    console.log(input);
                                     updateStatus({
                                         variables: { input }
                                     });
@@ -58,11 +59,8 @@ const Order = ({ order: { id, order, date, total, status }, client }) => {
                     <p className="card-text font-weight-bold">Fecha Pedido: 
                         <span className="font-weight-normal"> { translatedDate.toLocaleString("es-MX") }</span>
                     </p>
-                    <p className="card-text font-weight-bold">Total: 
-                        <span className="font-weight-normal"> ${ total }</span>
-                    </p>
 
-                    <h3 className="card-text text-center mb-3">Artículos del pedido</h3>
+                    <h3 className="card-text text-center mb-3 resaltar-texto">Artículos del pedido</h3>
                     { order.map((product, idx) => {
                         const { id, quantity } = product;
 
@@ -83,6 +81,10 @@ const Order = ({ order: { id, order, date, total, status }, client }) => {
                             </Query>
                         );
                     }) }
+                    <div className="d-flex align-items-center justify-content-end">
+                        <p className="card-text resaltar-texto mr-1">Total:</p>
+                        <p className="font-weight-normal inc-text"> ${ total }</p>
+                    </div>
                 </div>
             </div>
         </div>

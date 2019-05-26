@@ -19,7 +19,7 @@ const NavNoAuth = () => (
 );
 const NavAuth = ({ session }) => (
     <Fragment>
-        <Link to="/" className="navbar-brand text-light font-weight-bold">CRM</Link>
+        <Link to="/panel" className="navbar-brand text-light font-weight-bold">CRM</Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

@@ -9,7 +9,8 @@ import OrderContent from './OrderContent';
 
 export default class NewOrder extends Component {
     render() {
-        const { id } = this.props.match.params;
+        const { id } = this.props.match.params,
+            idSeller = this.props.session.id;
         return (
             <Fragment>
                 <h1 className="text-center">
@@ -32,6 +33,7 @@ export default class NewOrder extends Component {
                                     id={ id }
                                     products={ data.getProducts }
                                     refetch={ refetch }
+                                    idSeller={ idSeller }
                                 />
                             );
                         }}

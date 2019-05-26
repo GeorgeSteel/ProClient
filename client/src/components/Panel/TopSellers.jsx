@@ -3,22 +3,23 @@ import React from 'react';
 import Loader from '../Layout/Loader';
 
 import { Query } from 'react-apollo';
-import { TOP_CLIENTS_QUERY } from '../../queries/Charts';
+import { TOP_SELLERS_QUERY } from '../../queries/Charts';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-const TopClients = () => {
+const TopSellers = () => {
     return (
-        <Query query={ TOP_CLIENTS_QUERY }>
+        <Query query={ TOP_SELLERS_QUERY }>
             {({ loading, error, data }) => {
                 if(loading) return <Loader/>;
                 if(error) return `Error ${error.message}`;
 
-                const topClientsChart = [];
+                const topSellersChart = [];
+                console.log(data);
 
-                data.topClients.map((order, idx) => {
-                    return topClientsChart[idx] = {
-                        ...order.client[0],
-                        total: order.total
+                data.topSellers.map((seller, idx) => {
+                    return topSellersChart[idx] = {
+                        ...seller.seller[0],
+                        total: seller.total
                     }
                 });
 
@@ -26,7 +27,7 @@ const TopClients = () => {
                     <BarChart
                         width={700}
                         height={400}
-                        data={topClientsChart}
+                        data={topSellersChart}
                         margin={{
                             top: 5, right: 30, left: 20, bottom: 5,
                         }}
@@ -35,7 +36,7 @@ const TopClients = () => {
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
-                        <Bar dataKey="total" fill="#109a8b" />
+                        <Bar dataKey="total" fill="#6148b9" />
                     </BarChart>
                 );
             }}
@@ -44,4 +45,4 @@ const TopClients = () => {
     );
 };
 
-export default TopClients;
+export default TopSellers;

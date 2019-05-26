@@ -8,7 +8,7 @@ export const CLIENTS_QUERY = gql`
       lastname
       company
     }
-    totalClients
+    totalClients(seller: $seller)
   }`;
 
 export const NEW_CLIENT_MUTATION = gql`

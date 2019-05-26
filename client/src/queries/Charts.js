@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-  export const TOP_CLIENTS_QUERY = gql`
+export const TOP_CLIENTS_QUERY = gql`
     query topClients {
         topClients{
             total
@@ -10,3 +10,17 @@ import gql from 'graphql-tag';
         }
     }
 `;
+export const TOP_SELLERS_QUERY = gql`
+    query topSellers {
+        topSellers{
+            total
+            seller{
+                id
+                user
+                name
+                rol
+            }
+        }
+    }
+`;
+
