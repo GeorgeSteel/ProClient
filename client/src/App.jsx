@@ -23,10 +23,10 @@ const App = ({ refetch, session }) => {
         <Fragment>
           <Header session={ session }/>
           <div className="container">
-            <p className="text-right">{ (getUser) ? `Bienvenido: ${ getUser.user }` : null}</p>
+            <p className="text-right">{ (getUser) ? `Bienvenido: ${ getUser.name }` : null}</p>
             <Switch>
-              <PrivateRoute exact path="/clientes" component={ Clients }/>
-              <PrivateRoute exact path="/cliente/nuevo" component={ NewClient }/>
+              <PrivateRoute exact path="/clientes" component={ Clients } session={ getUser }/>
+              <PrivateRoute exact path="/cliente/nuevo" component={ NewClient } session={ getUser } />
               <PrivateRoute exact path="/cliente/editar/:id" component={ UpdateClient }/>
               <PrivateRoute exact path="/producto/nuevo" component={ NewProduct }/>
               <PrivateRoute exact path="/productos" component={ Products }/>
@@ -34,7 +34,7 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/pedido/nuevo/:id" component={ NewOrder }/>
               <PrivateRoute exact path="/pedidos/:id" component={ ClientOrders }/>
               <PrivateRoute exact path="/panel" component={ Panel }/>
-              <PrivateRoute exact path="/registro" component={ Register }/>
+              <PrivateRoute exact path="/registro" component={ Register } session={ getUser }/>
               <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
             </Switch>
           </div>

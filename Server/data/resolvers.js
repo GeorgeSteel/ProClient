@@ -12,6 +12,8 @@ const createToken = (name, secret, expiresIn) => {
     return jwt.sign({ user }, secret, { expiresIn });
 }
 
+const { ObjectId } = mongoose.Types;
+
 export const resolvers = {
     Query: {
         getClient: async (root, {id}) => {
@@ -21,9 +23,12 @@ export const resolvers = {
                 throw new Error(error);
             }
         },
-        getClients: async (root, {limit, offset}) => {
+        getClients: async (root, {limit, offset, seller}) => {
             try {
-                return await Clients.find({}).limit(limit).skip(offset);
+                let filter;
+                if (seller) filter = { seller: new ObjectId(seller) };
+                
+                return await Clients.find(filter).limit(limit).skip(offset);
             } catch (error) {
                 throw new Error(error);
             }
@@ -119,7 +124,8 @@ export const resolvers = {
                     company: input.company,
                     emails: input.emails,
                     age: input.age,
-                    type: input.type
+                    type: input.type,
+                    seller: input.seller
                 }); 
             } catch (error) {
                 throw new Error(error);
@@ -205,14 +211,16 @@ export const resolvers = {
                 throw new Error(error);                
             }
         },
-        createUser: async (root, {user, password}) => {
+        createUser: async (root, {user, password, name, rol}) => {
             try {
                 const userExists = await Users.findOne({ user });
                 if(userExists) throw new Error(`El usuario ${ user } ya existe`);
 
                 await Users.create({
                     user,
-                    password: bcrypt.hashSync(password, 10)
+                    password: bcrypt.hashSync(password, 10),
+                    name,
+                    rol
                 });
                 
                 return 'El nuevo usuario ha sido creado';
@@ -229,7 +237,7 @@ export const resolvers = {
                 if (!correctPassword) throw new Error(`Password Incorrecto`);
 
                 return {
-                    token: createToken(userExists, process.env.SECRET, '24hr')
+                    token: createToken(userExists, process.env.SECRET, '2hr')
                 };
             } catch (error) {
                 throw new Error(error);

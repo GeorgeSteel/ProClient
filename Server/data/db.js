@@ -12,7 +12,8 @@ const clientsSchema = new mongoose.Schema({
     emails: Array,
     age: Number,
     type: String,
-    orders: Array
+    orders: Array,
+    seller: mongoose.Types.ObjectId
 });
 const Clients = mongoose.model('clients', clientsSchema);
 
@@ -28,13 +29,16 @@ const ordersSchema = new mongoose.Schema({
     total: Number,
     date: Date,
     client: mongoose.Types.ObjectId,
-    status: String
+    status: String,
+    seller: mongoose.Types.ObjectId
 });
 const Orders = mongoose.model('orders', ordersSchema);
 
 const userSchema = new mongoose.Schema({
     user: String,
-    password: String
+    password: String,
+    name: String,
+    rol: String
 });
 const Users = mongoose.model('users', userSchema);
 

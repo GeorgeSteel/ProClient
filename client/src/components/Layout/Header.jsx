@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Logout from '../Auth/Logout';
+import RegisterBtn from './RegisterBtn';
 
 const Header = ({ session: { getUser } }) => {
-    let sessionExists = (getUser) ? <NavAuth/> : <NavNoAuth/>;
+    let sessionExists = (getUser) ? <NavAuth session={ getUser }/> : <NavNoAuth/>;
     return(
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex mb-4">
             <div className="container">
@@ -16,7 +17,7 @@ const Header = ({ session: { getUser } }) => {
 const NavNoAuth = () => (
     <h3 className="navbar-brand text-light font-weight-bold">CRM</h3>    
 );
-const NavAuth = () => (
+const NavAuth = ({ session }) => (
     <Fragment>
         <Link to="/" className="navbar-brand text-light font-weight-bold">CRM</Link>
 
@@ -48,6 +49,7 @@ const NavAuth = () => (
                         <Link to="/producto/nuevo" className="dropdown-item">Nuevo Producto</Link>
                     </div>
                 </li>
+                <RegisterBtn session={ session } />
                 <Logout/>
             </ul>
         </div>

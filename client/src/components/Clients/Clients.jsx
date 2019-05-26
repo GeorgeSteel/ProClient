@@ -42,9 +42,18 @@ export default class Clients extends Component {
 
     render() {
         const { alert: { show, message } } = this.state,
-                alert = (show) ? <Success message={ message } /> : null;
+                alert = (show) ? <Success message={ message } /> : null,
+                { rol } = this.props.session;
+        let id = '';
+        
+        if (rol === 'VENDEDOR') id = this.props.session.id;
+
         return(
-            <Query query={ CLIENTS_QUERY } pollInterval={1000} variables={{ limit: this.limit, offset: this.state.pagination.offset }}>
+            <Query 
+                query={ CLIENTS_QUERY } 
+                pollInterval={1000} 
+                variables={{ limit: this.limit, offset: this.state.pagination.offset, seller: id }}
+            >
                 {({ loading, error, data, startPolling, stopPolling }) => {
                     if(loading) return <Loader/>;
                     if(error) return `Error ${error.message}`;

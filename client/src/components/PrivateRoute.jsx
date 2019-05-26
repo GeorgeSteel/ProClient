@@ -1,13 +1,13 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, session, ...rest }) => {
     return (
         <Route 
             {...rest}
             render={ props => 
                 localStorage.getItem('token') ? (
-                    <Component {...props} />
+                    <Component {...props} session={ session }/>
                 ) : (
                     <Redirect
                         to={{

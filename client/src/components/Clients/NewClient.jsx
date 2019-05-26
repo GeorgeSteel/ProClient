@@ -59,7 +59,8 @@ export default class NewClient extends Component {
     }
 
     render() {
-        const { error } = this.state;
+        const { error } = this.state,
+            { id } = this.props.session;
         let res = (error) ? <p className="alert alert-danger p-3 text-center">Todos los campos son requeridos</p> : null;
         return (
             <Fragment>
@@ -93,7 +94,8 @@ export default class NewClient extends Component {
                                 company,
                                 emails,
                                 age: Number(age),
-                                type
+                                type,
+                                seller: id
                             };
                     
                             createClient({
