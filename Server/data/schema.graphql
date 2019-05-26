@@ -20,6 +20,9 @@ type TotalClient {
     total: Float
     client: [Client]
 }
+type User {
+    user: String
+}
 
 """ Gives a category of the client """
 enum ClientType {
@@ -46,6 +49,8 @@ type Query {
     getOrders(client: String): [Order]
     # Charts
     topClients: [TotalClient]
+    # Users
+    getUser: User
 }
 input EmailsInput {
     email: String!

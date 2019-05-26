@@ -99,6 +99,15 @@ export const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        getUser: async (root, args, {currentUser}) => {
+            try {
+                if (!currentUser) return null;
+
+                return await Users.findOne({ user: currentUser.user });
+            } catch (error) {
+                throw new Error(error);
+            }
         }
     },
     Mutation: {
@@ -220,7 +229,7 @@ export const resolvers = {
                 if (!correctPassword) throw new Error(`Password Incorrecto`);
 
                 return {
-                    token: createToken(userExists, process.env.SECRET, '1hr')
+                    token: createToken(userExists, process.env.SECRET, '24hr')
                 };
             } catch (error) {
                 throw new Error(error);

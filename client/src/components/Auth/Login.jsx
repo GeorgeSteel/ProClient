@@ -35,6 +35,12 @@ class Login extends Component {
 
         authUser().then(async ({ data }) => {
             localStorage.setItem('token', data.authUser.token);
+
+            await this.props.refetch();
+
+            this.limpiarState();
+
+            this.props.history.push('/panel');
         }).catch(err => {
             console.error(err);
         });

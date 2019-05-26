@@ -12,3 +12,10 @@ export const AUTH_USER_MUTATION = gql`
         }
     }
 `;
+export const GET_USER_QUERY = gql`
+    query getUser {
+        getUser {
+            user
+        }
+    }    
+`;
