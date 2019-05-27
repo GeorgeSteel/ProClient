@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { ApolloConsumer } from 'react-apollo';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Components
 import Header from './components/Layout/Header';
@@ -20,26 +19,13 @@ import PrivateRoute from './components/PrivateRoute';
 import Failed from './components/Alerts/Failed';
 
 const App = ({ refetch, session }) => {
-  let getUser;
-  if (!session) {
-    return(
-      <ApolloConsumer>
-        { client => {
-          localStorage.removeItem('token', '');
-          client.resetStore();
-          return <Redirect to="/login"/>;
-        } }
-      </ApolloConsumer>
-    );
-  } else {
-    getUser = session.getUser;
-  }
+  const { getUser } = session;
   return (    
       <Router>
         <Fragment>
           <Header session={ session }/>
           <div className="container">
-            <p className="text-right">{ (getUser) ? `Bienvenido: ${ getUser.name }` : null}</p>
+            <p className="text-right">{ (getUser) ? `Bienvenido: ${ getUser.name }` : null }</p>
             <Switch>
               <PrivateRoute exact path="/clientes" component={ Clients } session={ getUser }/>
               <PrivateRoute exact path="/cliente/nuevo" component={ NewClient } session={ getUser } />

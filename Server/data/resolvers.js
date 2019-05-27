@@ -271,7 +271,7 @@ export const resolvers = {
                 if (!correctPassword) throw new Error(`Password Incorrecto`);
 
                 return {
-                    token: createToken(userExists, process.env.SECRET, '1hr')
+                    token: createToken(userExists, process.env.SECRET, '16hr')
                 };
             } catch (error) {
                 throw new Error(error);

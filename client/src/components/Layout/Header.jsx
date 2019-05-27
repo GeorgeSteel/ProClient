@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import Logout from '../Auth/Logout';
 import RegisterBtn from './RegisterBtn';
 
-const Header = ({ session: { getUser } }) => {
-    let sessionExists = (getUser) ? <NavAuth session={ getUser }/> : <NavNoAuth/>;
+const Header = ({ session: { getUser }, expired }) => {
+    let sessionExists = (getUser && !expired) ? <NavAuth session={ getUser }/> : <NavNoAuth/>;
     return(
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex mb-4">
             <div className="container">
