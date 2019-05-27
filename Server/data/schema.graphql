@@ -61,7 +61,7 @@ type Query {
     getUser: User
 }
 input EmailsInput {
-    email: String!
+    email: String
 }
 """ Fields for new clients """
 input ClientInput {

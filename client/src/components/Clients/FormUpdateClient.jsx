@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 class FormUpdate extends Component {
     state = {
-        client: this.props.client
+        client: this.props.client,
+        emails: this.props.client.emails
     };
 
     handleChange = e => {
@@ -19,15 +20,12 @@ class FormUpdate extends Component {
 
     newEmail = () => {
         this.setState({
-            client:{
-                ...this.state.client,
-                emails: this.state.client.emails.concat([{ email: '' }])
-            }
+            emails: this.state.emails.concat([{ email: '' }])
         });
     }
 
     readEmail = i => e => {
-        const newEmail = this.state.client.emails.map((email, index) => {
+        const newEmail = this.state.emails.map((email, index) => {
             if (i !== index) return email;
             return {
                 ...email,
@@ -35,23 +33,18 @@ class FormUpdate extends Component {
             }
         });
         this.setState({
-            client: {
-                ...this.state.client,
-                emails: newEmail
-            }
+            emails: newEmail
         });
     }
 
     deleteEmail = i => () => {
         this.setState({
-            client:{
-                emails: this.state.client.emails.filter((email, index) => i !== index)
-            }
-        })
+            emails: this.state.emails.filter((email, index) => i !== index)
+        });
     }
 
     render() {
-        const { emails, name, lastname, company, type, age } = this.state.client;
+        const { name, lastname, company, type, age } = this.state.client;
 
         return (
             <Mutation 
@@ -64,7 +57,8 @@ class FormUpdate extends Component {
                 <form className="col-md-8 m-3" onSubmit={ e => {
                     e.preventDefault();
 
-                    const { id, name, lastname, age, company, type, emails } = this.state.client;
+                    const { id, name, lastname, age, company, type } = this.state.client;
+
                     const input = {
                         id,
                         name, 
@@ -72,7 +66,7 @@ class FormUpdate extends Component {
                         age: Number(age),
                         company,
                         type,
-                        emails
+                        emails: this.state.emails
                     };
 
                     updateClient({
@@ -115,7 +109,7 @@ class FormUpdate extends Component {
                                 defaultValue={ company }
                             />
                         </div>
-                        { emails.map((input, idx) => (
+                        { this.state.emails.map((input, idx) => (
                             <div key={ idx } className="form-group col-md-12">
                                 <label>Email: { idx + 1 }:</label>
                                 <div className="input-group">

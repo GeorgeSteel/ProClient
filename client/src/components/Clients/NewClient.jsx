@@ -10,9 +10,9 @@ export default class NewClient extends Component {
             lastname: '',
             company: '',
             age: '',
-            emails: [],
             type: ''
         },
+        emails: [],
         error: false
     };
 
@@ -26,16 +26,13 @@ export default class NewClient extends Component {
     }
 
     newEmail = () => {
-        this.setState({
-            client:{
-                ...this.state.client,
-                emails: this.state.client.emails.concat([{ email: '' }])
-            }
+        this.setState({            
+            emails: this.state.emails.concat([{ email: '' }])            
         });
     }
 
     readEmail = i => e => {
-        const newEmail = this.state.client.emails.map((email, index) => {
+        const newEmail = this.state.emails.map((email, index) => {
             if (i !== index) return email;
             return {
                 ...email,
@@ -43,19 +40,14 @@ export default class NewClient extends Component {
             }
         });
         this.setState({
-            client: {
-                ...this.state.client,
-                emails: newEmail
-            }
+            emails: newEmail            
         });
     }
 
     deleteEmail = i => () => {
         this.setState({
-            client:{
-                emails: this.state.client.emails.filter((email, index) => i !== index)
-            }
-        })
+            emails: this.state.emails.filter((email, index) => i !== index)
+        });
     }
 
     render() {
@@ -75,7 +67,8 @@ export default class NewClient extends Component {
                         <form className="col-md-8 m-3" onSubmit={ (e) => {
                             e.preventDefault();
                     
-                            const { name, lastname, company, emails, age, type } = this.state.client;
+                            const { name, lastname, company, age, type } = this.state.client;
+                            const { emails } = this.state;
                             
                             if(name === '' || lastname === '' || company === '' || age === '' || type === '') {
                                 this.setState({
@@ -135,7 +128,7 @@ export default class NewClient extends Component {
                                         onChange={ this.handleChange }
                                     />
                                 </div>
-                                { this.state.client.emails.map((input, idx) => (
+                                { this.state.emails.map((input, idx) => (
                                     <div key={ idx } className="form-group col-md-12">
                                         <label>Email: { idx + 1 }:</label>
                                         <div className="input-group">
