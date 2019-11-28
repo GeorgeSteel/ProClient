@@ -7,7 +7,7 @@ const isTokenExpired = (token) => {
     try {
         const decoded = decode(token);
         if (decoded.exp < Date.now() / 1000) {
-            localStorage.removeItem('token', '');
+            sessionStorage.removeItem('token', '');
             window.location.reload();
             // props.history.push('/login');
         }
@@ -18,7 +18,7 @@ const isTokenExpired = (token) => {
 }
 
 const PrivateRoute = ({ component: Component, session, ...rest }) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return (
         <Route 
             {...rest}

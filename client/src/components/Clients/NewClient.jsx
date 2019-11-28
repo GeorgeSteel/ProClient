@@ -56,7 +56,7 @@ export default class NewClient extends Component {
         let res = (error) ? <p className="alert alert-danger p-3 text-center">Todos los campos son requeridos</p> : null;
         return (
             <Fragment>
-                <h2 className="text-center">Agregar Cliente</h2>
+                <h2 className="text-center">Agregar un Cliente</h2>
                 { res }
                 <div className="row justify-content-center">
                     <Mutation 

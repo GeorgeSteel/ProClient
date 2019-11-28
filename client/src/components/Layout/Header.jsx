@@ -15,11 +15,11 @@ const Header = ({ session: { getUser }, expired }) => {
 };
 
 const NavNoAuth = () => (
-    <h3 className="navbar-brand text-light font-weight-bold">CRM</h3>    
+    <h3 className="navbar-brand text-light font-weight-bold">WebSystem</h3>    
 );
 const NavAuth = ({ session }) => (
     <Fragment>
-        <Link to="/panel" className="navbar-brand text-light font-weight-bold">CRM</Link>
+        <Link to="/panel" className="navbar-brand text-light font-weight-bold">WebSystem</Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

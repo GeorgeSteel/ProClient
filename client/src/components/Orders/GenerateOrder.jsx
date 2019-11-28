@@ -16,13 +16,13 @@ const GenerateOrder = ({ order: { products, total }, idClient, history, refetch,
             }) }
         >
             { addOrder => (
-            <button disabled={disabled} type="button" className="btn btn-lg btn-info mt-4" onClick={ e => {
+            <button disabled={ disabled } type="button" className="btn btn-lg btn-info mt-4" onClick={ e => {
                 const order = products.map(({ name, price, stock, ...object }) => object),
                         input = { order, total, client: idClient, seller: idSeller };
                 
                 addOrder({ variables: { input } });
             } }>
-                Generar Pedido
+                Guardar Pedido
             </button>
             ) }
         </Mutation>

@@ -34,7 +34,7 @@ class Login extends Component {
         e.preventDefault();
 
         authUser().then(async ({ data }) => {
-            localStorage.setItem('token', data.authUser.token);
+            sessionStorage.setItem('token', data.authUser.token);
 
             await this.props.refetch();
 

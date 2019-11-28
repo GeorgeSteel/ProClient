@@ -60,7 +60,7 @@ export default class Clients extends Component {
 
                     return(
                         <Fragment>
-                            <h2 className="text-center">Lista Clientes</h2>
+                            <h2 className="text-center">Lista de Clientes</h2>
 
                             { alert }
 

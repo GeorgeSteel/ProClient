@@ -38,6 +38,7 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/panel" component={ Panel }/>
               <PrivateRoute exact path="/registro" component={ Register } session={ getUser }/>
               <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
+              <Route exact path="/" render={ () => <Login refetch={ refetch } /> }/>
               <Route render={ () => <Failed message="La ruta a la que intentas acceder no existe" /> }/>
             </Switch>
           </div>
