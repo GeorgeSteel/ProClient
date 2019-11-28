@@ -71,7 +71,7 @@ export const resolvers = {
         },
         getOrders: async (root, {client}) => {
             try {
-                return await Orders.find({ client: client });
+                return await Orders.find({ client: client }).sort({$natural:-1});
             } catch (error) {
                 throw new Error(error);
             }
