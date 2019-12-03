@@ -38,6 +38,17 @@ const NavAuth = ({ session }) => (
                         <Link to="/cliente/nuevo" className="dropdown-item">Nuevo Cliente</Link>
                     </div>
                 </li>
+                <li className="nav-item dropdown mr-md-2 my-2 my-sm-2 my-md-0">
+                    <button 
+                        className="nav-link dropdown-toggle btn btn-block btn-success"
+                        data-toggle="dropdown"
+                    >Proveedores
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="navegacion">
+                        <Link to="/proveedores" className="dropdown-item">Ver Proveedores</Link>
+                        <Link to="/proveedor/nuevo" className="dropdown-item">Nuevo Proveedor</Link>
+                    </div>
+                </li>
                 <li className="nav-item dropdown">
                     <button 
                         className="nav-link dropdown-toggle btn btn-block btn-success"

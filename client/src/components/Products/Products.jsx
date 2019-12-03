@@ -43,6 +43,16 @@ export default class Products extends Component {
         });
     }
 
+    status = stock => {
+        if (stock <= 10) {
+            return <span className="badge badge-danger">Pocas unidades</span>;
+        } else if (stock > 10 && stock <= 30) {
+            return <span className="badge badge-warning">Se esta empezando a acabar</span>;                                            
+        } else {
+            return <span class="badge badge-success">Buena cantidad de unidades</span>
+        }
+    }
+
     render() {
         const { alert: { show, message } } = this.state,
                 alert = (show) ? <Success message={ message } /> : null;
@@ -67,6 +77,7 @@ export default class Products extends Component {
                                         <th>Nombre</th>
                                         <th>Precio</th>
                                         <th>Stock</th>
+                                        <th>Status</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -74,19 +85,12 @@ export default class Products extends Component {
                                     { data.getProducts.map(product => {
                                         const { id, stock, price, name } = product;
 
-                                        let styles;
-
-                                        if (stock <= 10) {
-                                            styles = 'table-danger text-light';
-                                        } else if (stock > 10 && stock <= 30) {
-                                            styles = 'table-warning text-light';                                            
-                                        }
-
                                         return(
-                                        <tr key={ id } className={ styles }>
+                                        <tr key={ id }>
                                             <td>{ name }</td>
                                             <td>$ { price }</td>
                                             <td>{ stock }</td>
+                                            <td>{ this.status(stock) }</td>
                                             <td>
                                                 <Link 
                                                     to={`producto/editar/${id}`} 

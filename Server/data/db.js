@@ -17,6 +17,24 @@ const clientsSchema = new mongoose.Schema({
 });
 const Clients = mongoose.model('clients', clientsSchema);
 
+const providersSchema = new mongoose.Schema({
+    name: String,
+    lastname: String,
+    company: String,
+    emails: Array,
+    orders: Array
+});
+const Providers = mongoose.model('providers', providersSchema);
+
+const projectSchema = new mongoose.Schema({
+    client: mongoose.Types.ObjectId,
+    products: Array,
+    total: Number,
+    date: Date,
+    status: String
+});
+const Projects = mongoose.model('projects', projectSchema);
+
 const productsSchema = new mongoose.Schema({
     name: String,
     price: Number,
@@ -28,7 +46,8 @@ const ordersSchema = new mongoose.Schema({
     order: Array,
     total: Number,
     date: Date,
-    client: mongoose.Types.ObjectId,
+    // client: mongoose.Types.ObjectId,
+    provider: mongoose.Types.ObjectId,
     status: String,
     seller: mongoose.Types.ObjectId
 });
@@ -46,5 +65,7 @@ export {
     Clients,
     Products,
     Orders,
-    Users
+    Users,
+    Providers,
+    Projects
 };

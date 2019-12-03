@@ -16,9 +16,9 @@ export default class Product extends Component {
                             type="number" 
                             className="form-control"
                             onChange={ e => {
-                                if (e.target.value > product.stock) {
-                                    e.target.value = product.stock;
-                                }
+                                // if (e.target.value > product.stock) {
+                                //     e.target.value = product.stock;
+                                // }
                                 this.props.updateQuantity(e.target.value, this.props.index);
                             } }
                         />

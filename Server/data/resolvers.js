@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Clients, Products, Orders, Users } from './db';
+import { Clients, Products, Orders, Users, Providers } from './db';
 
 import bcrypt from 'bcrypt';
 // Generate token
@@ -38,6 +38,23 @@ export const resolvers = {
                 let filter;
                 if (seller) filter = { seller: new ObjectId(seller) };
                 return await Clients.countDocuments(filter);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getProvider: async (root, {id}) => {
+            try {
+                return await Providers.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getProviders: async (root, {limit, offset, seller}) => {
+            try {
+                let filter;
+                if (seller) filter = { seller: new ObjectId(seller) };
+                
+                return await Providers.find(filter).limit(limit).skip(offset);
             } catch (error) {
                 throw new Error(error);
             }
@@ -179,6 +196,33 @@ export const resolvers = {
                 throw new Error(error);                
             }
         },
+        createProvider: async (root, {input}) => {            
+            try {
+                return await Providers.create({
+                    name: input.name,
+                    lastname: input.lastname,
+                    company: input.company,
+                    emails: input.emails,
+                }); 
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        updateProvider: async (root, {input}) => {
+            try {
+                return await Providers.findOneAndUpdate({ _id: input.id}, input, {new: true});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        deleteProvider: async (root, {id}) => {
+            try {
+                await Providers.findOneAndRemove({ _id: id});
+                return "El proveedor se ha eliminado correctamente";
+            } catch (error) {
+                throw new Error(error);                
+            }
+        },
         addProduct: async (root, {input}) => {
             try {
                 return await Products.create({
@@ -225,9 +269,9 @@ export const resolvers = {
                 let instruction;
 
                 if (status === 'COMPLETADO') {
-                    instruction = '-';
+                    instruction = '+';
                 } else if (status === 'CANCELADO') {
-                    instruction = '+';                    
+                    instruction = '-';                    
                 }
 
                 input.order.forEach(order => {

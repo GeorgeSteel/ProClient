@@ -14,11 +14,15 @@ export default class Pagination extends Component {
         const { pages } = this.state.pagination;
         const nextBtn = (currentPage !== pages) ? <button type="button" onClick={this.props.nextPage} className="btn btn-success mr-2">Siguiente &raquo;</button> : null;
 
-        return (
-        <div className="mt-5 d-flex justify-content-center">
-            { backBtn }
-            { nextBtn }
-        </div>
-        )
+        if (this.props.total <= this.props.limit) {
+            return null;
+        } else {
+            return (
+                <div className="mt-5 d-flex justify-content-center">
+                    { backBtn }
+                    { nextBtn }
+                </div>
+            );
+        }
     }
 }

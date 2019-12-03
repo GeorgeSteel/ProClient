@@ -7,6 +7,15 @@ type Client{
     age: Int
     type: ClientType
 }
+
+type Provider {
+    id: ID
+    name: String
+    lastname: String
+    company: String
+    emails: [Emails]
+}
+
 type Emails {
     email: String
 }
@@ -42,8 +51,14 @@ type Query {
     getClient(id: ID): Client
     """ It gets all the clients """
     getClients(limit: Int, offset: Int, seller: String): [Client]
-    """ It counts all the clients """
     totalClients(seller: String): String
+    # Providers
+    """ It gets a single provider """
+    getProvider(id: ID): Provider
+    """ It gets all the providers """
+    getProviders(limit: Int, offset: Int, seller: String): [Provider]
+    """ It counts all the clients """
+    totalProviders(seller: String): String
     # Products
     """ It gets all the products """
     getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
@@ -75,6 +90,15 @@ input ClientInput {
     orders: [OrderInput]
     seller: ID
 }
+""" Fields for new providers """
+input ProviderInput {
+    id: ID
+    name: String!
+    lastname: String!
+    company: String!
+    emails: [EmailsInput]
+    orders: [OrderInput]
+}
 
 """ Fields for new products """
 input ProductInput {
@@ -91,11 +115,13 @@ type Order {
     total: Float
     date: String
     client: ID
+    provider: ID
     status: StatusType
 }
 type OrdersArrayType {
     id: ID
     quantity: Int
+    limit: Int
 }
 type Token {
     token: String!
@@ -106,12 +132,14 @@ input OrderInput {
     total: Float
     date: String
     client: ID
+    provider: ID
     status: StatusType
     seller: ID
 }
 input OrdersArray {
     id: ID
     quantity: Int
+    limit: Int
 }
 """ Gives a status of the order """
 enum StatusType {
@@ -130,6 +158,13 @@ type Mutation {
     updateClient(input: ClientInput): Client
     """ Allow you to Delete clients """
     deleteClient(id: ID!): String
+    # Clients
+    """ Allow you to create new providers """
+    createProvider(input: ProviderInput): Provider 
+    """ Allow you to Update providers """
+    updateProvider(input: ProviderInput): Provider
+    """ Allow you to Delete providers """
+    deleteProvider(id: ID!): String
     # Products
     """ Creates a new product """
     addProduct(input: ProductInput): Product

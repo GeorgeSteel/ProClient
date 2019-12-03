@@ -10,7 +10,7 @@ import SummaryProduct from './SummaryProduct';
 
 import '../assets/css/orders.css';
 
-const Order = ({ order: { id, order, date, total, status }, client }) => {
+const Order = ({ order: { id, order, date, total, status }, provider }) => {
     const translatedDate = new Date(Number(date));
 
     let styles;
@@ -30,6 +30,7 @@ const Order = ({ order: { id, order, date, total, status }, client }) => {
                         <Mutation mutation={ UPDATE_STATUS_MUTATION }>
                         { updateStatus => (
                         <select 
+                                disabled={ status === 'COMPLETADO' ? true : false }                                
                                 className="form-control my-3"
                                 value={ status }
                                 onChange={ e => {
@@ -39,7 +40,7 @@ const Order = ({ order: { id, order, date, total, status }, client }) => {
                                         date,
                                         total,
                                         status: e.target.value,
-                                        client
+                                        provider
                                     };
                                     updateStatus({
                                         variables: { input }
