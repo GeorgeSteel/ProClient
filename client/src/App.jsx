@@ -6,6 +6,10 @@ import Header from './components/Layout/Header';
 import Clients from './components/Clients/Clients';
 import NewClient from './components/Clients/NewClient';
 import UpdateClient from './components/Clients/UpdateClient';
+import Providers from './components/Providers/Providers';
+import NewProvider from './components/Providers/NewProvider';
+import UpdateProvider from './components/Providers/UpdateProvider';
+import ProviderOrders from './components/Orders/ProviderOrders';
 import NewProduct from './components/Products/NewProduct';
 import Products from './components/Products/Products';
 import UpdateProduct from './components/Products/UpdateProduct';
@@ -17,10 +21,11 @@ import Login from './components/Auth/Login';
 import Session from './components/Session';
 import PrivateRoute from './components/PrivateRoute';
 import Failed from './components/Alerts/Failed';
-import Providers from './components/Providers/Providers';
-import NewProvider from './components/Providers/NewProvider';
-import UpdateProvider from './components/Providers/UpdateProvider';
-import ProviderOrders from './components/Orders/ProviderOrders';
+import NewProject from './components/Projects/NewProject';
+import ProjectOrders from './components/Projects/ProjectOrders';
+import UpdateProject from './components/Projects/UpdateProject';
+import Users from './components/Users/Users';
+import UpdateUsers from './components/Users/UpdateUsers';
 
 const App = ({ refetch, session }) => {
   const { getUser } = session;
@@ -42,8 +47,14 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/producto/editar/:id" component={ UpdateProduct }/>
               <PrivateRoute exact path="/pedido/nuevo/:id" component={ NewOrder } session={ getUser }/>
               <PrivateRoute exact path="/pedidos/:id" component={ ProviderOrders }/>
-              <PrivateRoute exact path="/panel" component={ Panel }/>cliente
+              <PrivateRoute exact path="/proyecto/nuevo/:id" component={ NewProject } session={ getUser }/>
+              <PrivateRoute exact path="/proyectos/:id" component={ ProjectOrders }/>
+              <PrivateRoute exact path="/proyecto/editar/:id" component={ UpdateProject }/>
+              <PrivateRoute exact path="/panel" component={ Panel }/>
               <PrivateRoute exact path="/registro" component={ Register } session={ getUser }/>
+              <PrivateRoute exact path="/usuarios" component={ Users }/>
+              <PrivateRoute exact path="/usuario/editar/:id" component={ UpdateUsers }/>
+
               <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
               <Route exact path="/" render={ () => <Login refetch={ refetch } /> }/>
               <Route render={ () => <Failed message="La ruta a la que intentas acceder no existe" /> }/>

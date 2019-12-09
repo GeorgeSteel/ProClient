@@ -45,11 +45,11 @@ export default class Products extends Component {
 
     status = stock => {
         if (stock <= 10) {
-            return <span className="badge badge-danger">Pocas unidades</span>;
+            return <span className="badge badge-pill badge-danger">Pocas unidades</span>;
         } else if (stock > 10 && stock <= 30) {
-            return <span className="badge badge-warning">Se esta empezando a acabar</span>;                                            
+            return <span className="badge badge-pill badge-warning">Se esta empezando a acabar</span>;                                            
         } else {
-            return <span class="badge badge-success">Buena cantidad de unidades</span>
+            return <span className="badge badge-pill badge-success">Buena cantidad de unidades</span>
         }
     }
 

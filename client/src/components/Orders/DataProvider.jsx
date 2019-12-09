@@ -7,7 +7,7 @@ const DataProvider = ({ id }) => {
     return (
         <Fragment>
             <h2 className="text-center mb-3">
-                Resumen de Cliente
+                Resumen del Proveedor
             </h2>
             <Query query={ GET_PROVIDER_QUERY } variables={{ id }} pollInterval={1000}>
                 {({ loading, error, data, startPolling, stopPolling }) => {

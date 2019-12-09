@@ -28,7 +28,9 @@ const Providers = mongoose.model('providers', providersSchema);
 
 const projectSchema = new mongoose.Schema({
     client: mongoose.Types.ObjectId,
-    products: Array,
+    seller: mongoose.Types.ObjectId,
+    name: String,
+    items: Array,
     total: Number,
     date: Date,
     status: String

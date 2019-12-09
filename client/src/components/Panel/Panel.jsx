@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import TopClients from './TopClients';
-import TopSellers from './TopSellers';
+// import TopSellers from './TopSellers';
 
 const Panel = () => {
     return (
@@ -9,10 +9,10 @@ const Panel = () => {
             <div className="row justify-content-center">
                 <TopClients/>
             </div>
-            <h1 className="text-center my-5">Top 10 Vendedores</h1>
-            <div className="row justify-content-center">
+            {/* <h1 className="text-center my-5">Top 10 Vendedores</h1> */}
+            {/* <div className="row justify-content-center">
                 <TopSellers/>
-            </div>
+            </div> */}
         </Fragment>
     );
 };

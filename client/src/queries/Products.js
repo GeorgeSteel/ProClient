@@ -26,7 +26,7 @@ export const DELETE_PRODUCTS_MUTATION = gql`
 `;
 
 export const GET_PRODUCT_QUERY = gql`
-  query getProduct($id: ID!) {
+  query getProduct($id: ID) {
     getProduct(id: $id){
       name
       price

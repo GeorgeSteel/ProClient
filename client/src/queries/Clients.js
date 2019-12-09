@@ -7,6 +7,7 @@ export const CLIENTS_QUERY = gql`
       name
       lastname
       company
+      type
     }
     totalClients(seller: $seller)
   }`;

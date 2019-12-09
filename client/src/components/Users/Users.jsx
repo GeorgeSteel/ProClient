@@ -2,13 +2,13 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Query, Mutation } from 'react-apollo';
-import { CLIENTS_QUERY, DELETE_CLIENT_MUTATION } from '../../queries/Clients';
+import { GET_USERS_QUERY, DELETE_USER_MUTATION } from '../../queries/Users';
 
 import Pagination from '../Pagination';
 import Loader from '../Layout/Loader';
 import Success from '../Alerts/Success';
 
-export default class Clients extends Component {    
+export default class Users extends Component {    
     limit = 10;
 
     state = {
@@ -40,27 +40,23 @@ export default class Clients extends Component {
         });
     }
 
-    type = type => {
-        if (type === 'PREMIUM') {
-            return <span className="badge badge-pill badge-warning">{ type }</span>;
-        } else if (type === 'BASICO') {
-            return <span className="badge badge-pill badge-primary">{ type }</span>
+    rol = rol => {
+        if (rol === 'ADMINISTRADOR') {
+            return <span className="badge badge-pill badge-warning">{ rol }</span>;
+        } else if (rol === 'VENDEDOR') {
+            return <span className="badge badge-pill badge-primary">{ rol }</span>
         }
     }
 
     render() {
         const { alert: { show, message } } = this.state,
-                alert = (show) ? <Success message={ message } /> : null,
-                { rol } = this.props.session;
-        let id = '';
-        
-        if (rol === 'VENDEDOR') id = this.props.session.id;
-
+                alert = (show) ? <Success message={ message } /> : null;
+        console.log(this.props.user);
         return(
             <Query 
-                query={ CLIENTS_QUERY } 
+                query={ GET_USERS_QUERY } 
                 pollInterval={1000} 
-                variables={{ limit: this.limit, offset: this.state.pagination.offset, seller: id }}
+                variables={{ limit: this.limit, offset: this.state.pagination.offset }}
             >
                 {({ loading, error, data, startPolling, stopPolling }) => {
                     if(loading) return <Loader/>;
@@ -68,37 +64,28 @@ export default class Clients extends Component {
 
                     return(
                         <Fragment>
-                            <h2 className="text-center">Lista de Clientes</h2>
+                            <h2 className="text-center">Lista de Usuarios</h2>
 
                             { alert }
 
-                            <ul className="list-group mt-4">
-                                { data.getClients.map(client => {
-                                    const { id } = client;
+                            <ul className="list-group mt-4 col-8 m-auto">
+                                { data.getUsers.map(user => {
+                                    const { id } = user;
                                     return(
                                         <li key={ id } className="list-group-item">
                                             <div className="row justify-content-between align-items-center">
                                                 <div className="col-md-6 d-flex justify-content-between align-items-center">
-                                                    { client.name } { client.lastname } - { client.company } { this.type(client.type) }
+                                                    { user.name }  { this.rol(user.rol) }
                                                 </div>
                                                 <div className="col-md-6 d-flex justify-content-end">
-                                                    <Link 
-                                                        to={`/proyecto/nuevo/${id}`}
-                                                        className="btn btn-warning d-block d-md-inline-block mr-2"
-                                                    >&#43; Nuevo Proyecto
-                                                    </Link>
-                                                    <Link 
-                                                        to={`/proyectos/${id}`}
-                                                        className="btn btn-info d-block d-md-inline-block mr-2"
-                                                    >Ver Proyectos
-                                                    </Link>
+                                                    
                                                     <Mutation 
-                                                        mutation={ DELETE_CLIENT_MUTATION }
+                                                        mutation={ DELETE_USER_MUTATION }
                                                         onCompleted={(data) => {
                                                             this.setState({
                                                                 alert: {
                                                                     show: true,
-                                                                    message: data.deleteClient
+                                                                    message: data.deleteUser
                                                                 }
                                                             }, () => {
                                                                 setTimeout(() => {
@@ -112,13 +99,13 @@ export default class Clients extends Component {
                                                             });
                                                         }}    
                                                     >
-                                                        {deleteClient => (
+                                                        {deleteProject => (
                                                             <button 
                                                                 type="button" 
                                                                 className="btn btn-danger d-block d-md-inline-block mr-2"
                                                                 onClick={ () => {
-                                                                    if (window.confirm('¿Seguro que deseas eliminar este cliente?')) {
-                                                                        deleteClient({
+                                                                    if (window.confirm('¿Seguro que deseas eliminar este usuario?')) {
+                                                                        deleteProject({
                                                                             variables: { id }
                                                                         });
                                                                     }
@@ -128,9 +115,9 @@ export default class Clients extends Component {
                                                         )}
                                                     </Mutation>
                                                     <Link 
-                                                        to={`/cliente/editar/${client.id}`} 
+                                                        to={`/usuario/editar/${user.id}`} 
                                                         className="btn btn-success d-block d-md-inline-block"
-                                                    >Editar Cliente
+                                                    >Editar Usuario
                                                     </Link>
                                                 </div>
                                             </div>
@@ -140,7 +127,7 @@ export default class Clients extends Component {
                             </ul>
                             <Pagination
                                 pagination={ this.state.pagination }
-                                total={ data.totalClients }
+                                total={ data.totalUsers }
                                 previousPage={ this.previousPage }
                                 nextPage={ this.nextPage }
                                 limit={ this.limit }

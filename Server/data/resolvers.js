@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Clients, Products, Orders, Users, Providers } from './db';
+import { Clients, Products, Orders, Users, Providers, Projects } from './db';
 
 import bcrypt from 'bcrypt';
 // Generate token
@@ -93,6 +93,57 @@ export const resolvers = {
                 throw new Error(error);
             }
         },
+        getProjects: async (root, {client, limit, offset}) => {
+            try {
+                return await Projects.find({ client: client }).sort({$natural:-1}).limit(limit).skip(offset);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getProject: async (root, {id}) => {
+            try {
+                return await Projects.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        totalProjects: async (root, {id}) => {
+            try {
+                return await Projects.countDocuments({id});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getUser: async (root, args, {currentUser}) => {
+            try {
+                if (!currentUser) return null;
+
+                return await Users.findOne({ user: currentUser.user });
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getSingleUser: async (root, {id}) => {
+            try {
+                return await Users.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        getUsers: async (root, {limit, offset}) => {
+            try {                
+                return await Users.find().limit(limit).skip(offset);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        totalUsers: async (root) => {
+            try {
+                return await Users.countDocuments({});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
         topClients: async (root) => {
             try {
                 return await Orders.aggregate([
@@ -120,15 +171,6 @@ export const resolvers = {
                       $limit: 10
                     }
                   ]);
-            } catch (error) {
-                throw new Error(error);
-            }
-        },
-        getUser: async (root, args, {currentUser}) => {
-            try {
-                if (!currentUser) return null;
-
-                return await Users.findOne({ user: currentUser.user });
             } catch (error) {
                 throw new Error(error);
             }
@@ -270,9 +312,9 @@ export const resolvers = {
 
                 if (status === 'COMPLETADO') {
                     instruction = '+';
-                } else if (status === 'CANCELADO') {
-                    instruction = '-';                    
-                }
+                } //else if (status === 'CANCELADO') {
+                //     instruction = '-';                    
+                // }
 
                 input.order.forEach(order => {
                     Products.updateOne({ _id: order.id }, {
@@ -285,6 +327,64 @@ export const resolvers = {
 
                 await Orders.findOneAndUpdate({ _id: input.id}, input, {new: true});
                 return "El pedido ha sido actualizado satisfactoriamente";
+            } catch (error) {
+                throw new Error(error);                
+            }
+        },
+        addProject: async (root, {input}) => {
+            try {
+                input.items.forEach(item => {
+                    Products.updateOne({ _id: item.id }, {
+                        "$inc": { "stock": `-${ item.quantity }` }
+                    }, function (err) {
+                            if(err) return new Error(err);
+                        }
+                    );
+                });
+
+                return await Projects.create({
+                    items: input.items,
+                    name: input.name,
+                    total: input.total,
+                    date: new Date(),
+                    status: "PENDIENTE",
+                    client: input.client,
+                    seller: input.seller
+                });         
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        updateProject: async (root, {input}) => {
+            try {
+                const { rest, items } = input;
+                let instruction;
+
+                items.forEach((item, idx) => {
+                    if (rest[idx] >= 0) {
+                        instruction = '-';                    
+                    } else if (rest[idx] < 0) {
+                        instruction = '+';
+                        rest[idx] = rest[idx] * -1;
+                    }
+
+                    Products.updateOne({ _id: item.id }, {
+                        "$inc": { "stock": `${ instruction }${ rest[idx] }` }
+                    }, function (err) {
+                            if(err) return new Error(err);
+                        }
+                    );
+                });
+
+                return await Projects.findOneAndUpdate({ _id: input.id}, input, {new: true});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        deleteProject: async (root, {id}) => {
+            try {
+                await Projects.findOneAndRemove({ _id: id});
+                return "El proyecto se ha eliminado correctamente";
             } catch (error) {
                 throw new Error(error);                
             }
@@ -320,6 +420,22 @@ export const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
-        }
+        },
+        updateUser: async (root, {input}) => {
+            try {
+                input.password = bcrypt.hashSync(input.password, 10)
+                return await Users.findOneAndUpdate({ _id: input.id}, input, {new: true});
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        deleteUser: async (root, {id}) => {
+            try {
+                await Users.findOneAndRemove({ _id: id});
+                return "El usuario ha sido eliminado satisfactoriamente";
+            } catch (error) {
+                throw new Error(error);                
+            }
+        },
     }
 }

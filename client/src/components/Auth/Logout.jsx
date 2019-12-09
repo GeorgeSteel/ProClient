@@ -13,7 +13,7 @@ const Logout = ({ history }) => (
         { client => {
             return(
                 <button 
-                    className="btn btn-light ml-md-2 mt-2 mt-md-0"
+                    className="btn btn-light ml-md-2 mt-2 mt-md-0 ml-2" 
                     onClick={ () => logout(client, history) }
                 >
                     Cerrar Sesión

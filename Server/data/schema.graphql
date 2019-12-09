@@ -63,17 +63,33 @@ type Query {
     """ It gets all the products """
     getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
     """ It gets a single product """
-    getProduct(id: ID!): Product
+    getProduct(id: ID): Product
     """ It counts all the products """
     totalProducts: String
     # Orders
     """ It shows orders by client """
     getOrders(client: String): [Order]
+    # Projects
+    """ It shows projects by client """
+    getProjects(client: String, limit: Int, offset: Int): [Project]
+    """ It shows projects by client """
+    getProject(id: ID): Project
+    """ It counts all the projects """
+    totalProjects(client: String): String
+
     # Charts
     topClients: [TotalClient]
     topSellers: [TotalSeller]
     # Users
     getUser: User
+    """ Get All Users """
+    getUsers(limit: Int, offset: Int): [User]
+    """ Get a Single User """
+    getSingleUser(id: ID): User
+
+    """ It counts all users """
+    totalUsers: String
+
 }
 input EmailsInput {
     email: String
@@ -100,6 +116,15 @@ input ProviderInput {
     orders: [OrderInput]
 }
 
+""" Fields for users """
+input UserInput {
+    id: ID
+    user: String!
+    name: String!
+    rol: String!
+    password: String!
+}
+
 """ Fields for new products """
 input ProductInput {
     id: ID
@@ -121,7 +146,6 @@ type Order {
 type OrdersArrayType {
     id: ID
     quantity: Int
-    limit: Int
 }
 type Token {
     token: String!
@@ -139,13 +163,45 @@ input OrderInput {
 input OrdersArray {
     id: ID
     quantity: Int
-    limit: Int
 }
 """ Gives a status of the order """
 enum StatusType {
     PENDIENTE
     COMPLETADO
     CANCELADO
+}
+
+""" Fields for new projects """
+type Project {
+    id: ID
+    name: String
+    items: [ItemsArrayType]
+    total: Float
+    date: String
+    client: ID
+    seller: ID
+    status: StatusType
+}
+type ItemsArrayType {
+    id: ID
+    quantity: Int
+    limit: Int
+}
+input ProjectInput {
+    id: ID
+    name: String
+    items: [ItemsArray]
+    total: Float
+    date: String
+    client: ID
+    seller: ID
+    status: StatusType
+    rest: [Int]
+}
+input ItemsArray {
+    id: ID
+    quantity: Int
+    limit: Int
 }
 
 """ Mutations for create clients """
@@ -177,8 +233,20 @@ type Mutation {
     addOrder(input: OrderInput): Order
     """ Update the status order """
     updateStatus(input: OrderInput): String
+    # Projects
+    """ Add a new Project """
+    addProject(input: ProjectInput): Project
+    """ Update the project """
+    updateProject(input: ProjectInput): Project
+    """ Allow you to Delete projects """
+    deleteProject(id: ID!): String
     # Users 
     """ Creates a new user """
     createUser(user: String!, password: String!, name: String!, rol: String!): String
+    """ Authenticate user """
     authUser(user: String!, password: String!): Token
+    """ Update user """
+    updateUser(input: UserInput): User
+    """ Delete user """
+    deleteUser(id: ID!): String
 }

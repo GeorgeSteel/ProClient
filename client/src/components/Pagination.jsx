@@ -18,7 +18,7 @@ export default class Pagination extends Component {
             return null;
         } else {
             return (
-                <div className="mt-5 d-flex justify-content-center">
+                <div className="mt-5 mb-5 d-flex justify-content-center">
                     { backBtn }
                     { nextBtn }
                 </div>
