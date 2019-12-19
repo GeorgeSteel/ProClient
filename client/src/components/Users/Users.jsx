@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { Query, Mutation } from 'react-apollo';
 import { GET_USERS_QUERY, DELETE_USER_MUTATION } from '../../queries/Users';
@@ -50,8 +50,9 @@ export default class Users extends Component {
 
     render() {
         const { alert: { show, message } } = this.state,
-                alert = (show) ? <Success message={ message } /> : null;
-        console.log(this.props.user);
+                alert = (show) ? <Success message={ message } /> : null,
+                useRol = this.props.session.rol,
+                redirect = (useRol !== 'ADMINISTRADOR') ? <Redirect to="/panel"/> : null;
         return(
             <Query 
                 query={ GET_USERS_QUERY } 
@@ -64,6 +65,7 @@ export default class Users extends Component {
 
                     return(
                         <Fragment>
+                            { redirect }
                             <h2 className="text-center">Lista de Usuarios</h2>
 
                             { alert }

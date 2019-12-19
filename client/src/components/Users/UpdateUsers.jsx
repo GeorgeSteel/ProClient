@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+
 import { Query } from 'react-apollo';
 import { GET_SINGLE_USER_QUERY } from '../../queries/Users';
 
@@ -24,6 +25,7 @@ export default class UpdateUsers extends Component {
                         id={ id }
                         user={ data.getSingleUser }
                         refetch={ refetch }
+                        session={ this.props.session.rol }
                     />
                 );
             }}

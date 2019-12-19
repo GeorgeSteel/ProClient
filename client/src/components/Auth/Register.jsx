@@ -43,7 +43,7 @@ class Register extends Component {
 
         createUser().then((data) => {
             this.cleanState();
-            this.props.history.push('/login')
+            this.props.history.push('/usuarios');
         }).catch((err) => {
             console.error(err);
         });
@@ -52,7 +52,7 @@ class Register extends Component {
     render() {
         const { user, password, repeatPassword, name, rol } = this.state,
             useRol = this.props.session.rol,
-            redirect = (useRol !== 'ADMINISTRADOR') ? <Redirect to="/clientes"/> : null;
+            redirect = (useRol !== 'ADMINISTRADOR') ? <Redirect to="/panel"/> : null;
 
         return (
             <Fragment>

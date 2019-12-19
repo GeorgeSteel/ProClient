@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import Failed from '../Alerts/Failed';
 
@@ -47,7 +47,6 @@ class FormUpdateUser extends Component {
 
         updateUser().then((data) => {
             this.cleanState();
-            this.props.history.push('/usuarios')
         }).catch((err) => {
             console.error(err);
         });
@@ -55,16 +54,22 @@ class FormUpdateUser extends Component {
 
     render() {
         const { user, password, repeatPassword, name, rol } = this.state;
-        const { id } = this.props.user;
+        const { id } = this.props.user,
+        useRol = this.props.session,
+        redirect = (useRol !== 'ADMINISTRADOR') ? <Redirect to="/panel"/> : null;
         const input = {
           user, password, name, rol, id
         }
         return (
             <Fragment>
                 <div className="row justify-content-center">
+                    { redirect }
                     <Mutation 
                         mutation={ UPDATE_USER_MUTATION } 
                         variables={{ input }}
+                        onCompleted={ () => this.props.refetch().then(() => {
+                            this.props.history.push('/usuarios');
+                        }) }
                     >
                         {(updateUser, { loading, error, data }) => {
                             return(

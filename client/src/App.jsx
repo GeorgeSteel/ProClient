@@ -52,8 +52,8 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/proyecto/editar/:id" component={ UpdateProject }/>
               <PrivateRoute exact path="/panel" component={ Panel }/>
               <PrivateRoute exact path="/registro" component={ Register } session={ getUser }/>
-              <PrivateRoute exact path="/usuarios" component={ Users }/>
-              <PrivateRoute exact path="/usuario/editar/:id" component={ UpdateUsers }/>
+              <PrivateRoute exact path="/usuarios" component={ Users } session={ getUser }/>
+              <PrivateRoute exact path="/usuario/editar/:id" component={ UpdateUsers } session={ getUser }/>
 
               <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
               <Route exact path="/" render={ () => <Login refetch={ refetch } /> }/>

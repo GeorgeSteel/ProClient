@@ -109,7 +109,7 @@ export default class Providers extends Component {
                                                                 type="button" 
                                                                 className="btn btn-danger d-block d-md-inline-block mr-2"
                                                                 onClick={ () => {
-                                                                    if (window.confirm('¿Seguro que deseas eliminar este cliente?')) {
+                                                                    if (window.confirm('¿Seguro que deseas eliminar este proveedor?')) {
                                                                         deleteProvider({
                                                                             variables: { id }
                                                                         });
