@@ -5,14 +5,11 @@ import { RootSession } from './App';
 import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: 'variables.env' });
 
 let API;
 
 if (process.env.NODE_ENV === 'production') {
-  API = process.env.API;
+  API = 'https://dcmags.herokuapp.com/graphql';
 } else {
   API = '/graphql';
 }
