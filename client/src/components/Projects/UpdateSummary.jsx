@@ -16,7 +16,8 @@ const UpdateSummary = ({ updateQuantity, updateLimit, deleteProduct, products })
                         <th>Precio</th>
                         <th>Stock</th>
                         <th>Cantidad</th>
-                        <th>Limite</th>
+                        <th>Limite Actual</th>
+                        <th>Limite Total</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>

@@ -7,7 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    uri: "/graphql",
     // send token to the server
     fetchOptions:{
       credentials: 'include'

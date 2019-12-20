@@ -2,6 +2,11 @@ import React, { Component, Fragment } from 'react';
 
 export default class UpdateProduct extends Component {
     limit = React.createRef();
+
+    state = {
+        updateLimit: Number(this.props.product.limit - this.props.product.quantity)
+    };
+
     render() {
         const { product } = this.props;
         // console.log(product);
@@ -19,30 +24,19 @@ export default class UpdateProduct extends Component {
                         onChange={ e => {
                             if (Number(e.target.value) > this.limit.current.value) {
                                 e.target.value = this.limit.current.value;
-                            }                                
+                            }
+                            
+                            this.setState({
+                                updateLimit: product.limit - e.target.value
+                            });
                             
                             this.props.updateQuantity(e.target.value, this.props.index);
                         } }
                         value={ product.quantity }
                     />
                 </td>
-                <td>
-                    <input 
-                        disabled
-                        min="1"
-                        type="number" 
-                        className="form-control"
-                        ref={ this.limit }
-                        onChange={ e => {
-                            if (e.target.value > product.stock) {
-                                e.target.value = product.stock;
-                            }
-
-                            this.props.updateLimit(e.target.value, this.props.index);
-                        } }
-                        value={ product.limit }
-                    />
-                </td>
+                <td>{ this.state.updateLimit }</td>
+                <td ref={ this.limit }>{ product.limit }</td>
                 <td className="col-2">
                     <button
                         type="button"

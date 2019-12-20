@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import Failed from '../Alerts/Failed';
 
@@ -51,13 +51,18 @@ class Login extends Component {
         const noValido = !user || !password;
         return noValido;
     }
+
+    logOut = (session) => {
+        if (session) return <Redirect to="/panel"/>;
+    }
     render() { 
 
         const { user, password } = this.state;
-      
+
         return ( 
             <Fragment>
-                 <h1 className="text-center mb-5">Iniciar Sesión</h1>
+                { this.logOut(sessionStorage.getItem('token')) }
+                <h1 className="text-center mb-5">Iniciar Sesión</h1>
                 <div className="row  justify-content-center">
 
                     <Mutation 

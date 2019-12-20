@@ -55,8 +55,8 @@ const App = ({ refetch, session }) => {
               <PrivateRoute exact path="/usuarios" component={ Users } session={ getUser }/>
               <PrivateRoute exact path="/usuario/editar/:id" component={ UpdateUsers } session={ getUser }/>
 
-              <Route exact path="/login" render={ () => <Login refetch={ refetch } /> }/>
-              <Route exact path="/" render={ () => <Login refetch={ refetch } /> }/>
+              <Route exact path="/login" render={ () => <Login refetch={ refetch } session={ getUser }/> }/>
+              <Route exact path="/" render={ () => <Login refetch={ refetch } session={ getUser }/> }/>
               <Route render={ () => <Failed message="La ruta a la que intentas acceder no existe" /> }/>
             </Switch>
           </div>
