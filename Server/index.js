@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // graphql
 import { ApolloServer } from 'apollo-server-express';
@@ -35,4 +36,12 @@ const server = new ApolloServer({
 
 server.applyMiddleware({app});
 
-app.listen({ port: 4000 }, () => console.log(`Server running on: http://localhost:4000${server.graphqlPath}`));
+app.use(express.static('public'));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+})
+
+
+const PORT = process.env.PORT || 4000;
+
+app.listen({ port: PORT }, () => console.log(`Server running on: http://localhost:4000${server.graphqlPath}`));
