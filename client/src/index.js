@@ -5,6 +5,9 @@ import { RootSession } from './App';
 import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: 'variables.env' });
 
 let API;
 
