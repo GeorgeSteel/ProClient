@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 export default class UpdateProduct extends Component {
-    limit = React.createRef();
-
     state = {
         updateLimit: Number(this.props.product.limit - this.props.product.quantity)
     };
@@ -22,8 +20,8 @@ export default class UpdateProduct extends Component {
                         type="number" 
                         className="form-control"
                         onChange={ e => {
-                            if (Number(e.target.value) > this.limit.current.value) {
-                                e.target.value = this.limit.current.value;
+                            if (Number(e.target.value) > product.limit) {
+                                e.target.value = product.limit;
                             }
                             
                             this.setState({
@@ -36,7 +34,7 @@ export default class UpdateProduct extends Component {
                     />
                 </td>
                 <td>{ this.state.updateLimit }</td>
-                <td ref={ this.limit }>{ product.limit }</td>
+                <td>{ product.limit }</td>
                 <td className="col-2">
                     <button
                         type="button"

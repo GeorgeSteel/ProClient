@@ -65,7 +65,7 @@ export default class OrderContent extends Component {
 
     render() {
         const products = this.state.products,                    
-                    generateBtn = (products.length !== 0) ? <GenerateOrder name={ this.state.name } idSeller={this.props.idSeller} products={this.state} idClient={this.props.id} refetch={this.props.refetch} /> : null,
+            generateBtn = (products.length !== 0) ? <GenerateOrder name={ this.state.name } idSeller={this.props.idSeller} products={this.state} idClient={this.props.id} refetch={this.props.refetch} /> : null,
             message = (this.state.total < 0) ? <Failed message="Las cantidades no pueden ser negativas" /> : null;
         return (
             <Fragment>
@@ -83,6 +83,7 @@ export default class OrderContent extends Component {
                     getOptionLabel={(options) => options.name}
                     onChange={ this.handleChange }
                     value={ this.state.products }
+                    onMenuOpen={ () => this.props.refetch() }
                 />
                            
                 <input 

@@ -6,8 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 
+let API;
+
+if (process.env.NODE_ENV === 'production') {
+  API = process.env.API;
+} else {
+  API = '/graphql';
+}
+
 const client = new ApolloClient({
-    uri: "/graphql",
+    uri: API,
     // send token to the server
     fetchOptions:{
       credentials: 'include'

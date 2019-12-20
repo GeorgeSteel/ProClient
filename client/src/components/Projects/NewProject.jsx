@@ -24,19 +24,19 @@ export default class NewProject extends Component {
           </div>
           <div className="col-md-9">
             <Query query={ GET_PRODUCTS_QUERY } variables={{ stock: true }}>
-            {({ loading, error, data, refetch, startPolling, stopPolling }) => {
-                if(loading) return <Loader/>;
-                if(error) return `Error ${error.message}`;
+              {({ loading, error, data, refetch, startPolling, stopPolling }) => {
+                  if(loading) return <Loader/>;
+                  if(error) return `Error ${error.message}`;
 
-                return(
-                  <OrderContent
-                    id={ id }
-                    products={ data.getProducts }
-                    refetch={ refetch }
-                    idSeller={ idSeller }
-                  />
-                );
-            }}
+                  return(
+                    <OrderContent
+                      id={ id }
+                      products={ data.getProducts }
+                      refetch={ refetch }
+                      idSeller={ idSeller }
+                    />
+                  );
+              }}
             </Query>
           </div>
         </div>

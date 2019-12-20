@@ -3,18 +3,21 @@
   "version": "1.0.0",
   "description": "graphql server backend",
   "main": "index.js",
+  "engines": {
+    "node": "13.3.0"
+  },
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node -e js"
   },
   "author": "Jorge Acero",
   "license": "ISC",
   "devDependencies": {
+  },
+  "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "nodemon": "^1.19.1"
-  },
-  "dependencies": {
+    "nodemon": "^1.19.1",
     "apollo-server-express": "^2.5.0",
     "bcrypt": "^3.0.7",
     "dotenv": "^8.0.0",

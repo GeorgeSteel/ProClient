@@ -29,6 +29,10 @@ type TotalClient {
     total: Float
     client: [Client]
 }
+type TotalProvider {
+    total: Float
+    provider: [Provider]
+}
 type TotalSeller {
     total: Float
     seller: [User]
@@ -79,6 +83,7 @@ type Query {
 
     # Charts
     topClients: [TotalClient]
+    topProviders: [TotalProvider]
     topSellers: [TotalSeller]
     # Users
     getUser: User

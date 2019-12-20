@@ -146,7 +146,7 @@ export const resolvers = {
         },
         topClients: async (root) => {
             try {
-                return await Orders.aggregate([
+                return await Projects.aggregate([
                     {
                       $match: { status: "COMPLETADO" }
                     },
@@ -162,6 +162,37 @@ export const resolvers = {
                           localField: '_id',
                           foreignField: '_id',
                           as: 'client'
+                      }
+                    },
+                    {
+                      $sort: { total: -1 }
+                    },
+                    {
+                      $limit: 10
+                    }
+                  ]);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        topProviders: async (root) => {
+            try {
+                return await Orders.aggregate([
+                    {
+                      $match: { status: "COMPLETADO" }
+                    },
+                    {
+                      $group: { 
+                          _id: "$provider",
+                          total: { $sum: "$total" }
+                      }
+                    },
+                    {
+                      $lookup: {
+                          from: 'providers',
+                          localField: '_id',
+                          foreignField: '_id',
+                          as: 'provider'
                       }
                     },
                     {

@@ -10,6 +10,16 @@ export const TOP_CLIENTS_QUERY = gql`
         }
     }
 `;
+export const TOP_PROVIDERS_QUERY = gql`
+    query topProviders {
+        topProviders{
+            total
+            provider{
+                name
+            }
+        }
+    }
+`;
 export const TOP_SELLERS_QUERY = gql`
     query topSellers {
         topSellers{

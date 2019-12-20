@@ -10,7 +10,7 @@ const RegisterBtn = ({ session: { rol } }) => {
         // >
         //     Crear Usuario
         // </Link>
-        <li className="nav-item dropdown ml-4">
+        <li className="nav-item dropdown ml-4 mr-md-2 my-2 my-sm-2 my-md-0">
             <button 
                 className="nav-link dropdown-toggle btn btn-block btn-warning"
                 data-toggle="dropdown"

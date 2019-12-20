@@ -1,8 +1,19 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: 'variables.env' });
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/clients', { useNewUrlParser: true, useFindAndModify: false });
+let dbURL;
+
+if (process.env.NODE_ENV === 'production') {
+    dbURL = `mongodb+srv://${process.env.USERDB}:${process.env.DBCREDENTIAL}@dcm-gdhia.mongodb.net/DCM?retryWrites=true&w=majority`;
+} else {
+    dbURL = 'mongodb://localhost/clients';
+}
+
+mongoose.connect(dbURL, { useNewUrlParser: true, useFindAndModify: false });
 
 // Define client's schema
 const clientsSchema = new mongoose.Schema({
