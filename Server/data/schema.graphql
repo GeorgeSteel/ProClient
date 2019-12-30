@@ -164,6 +164,7 @@ input OrderInput {
     provider: ID
     status: StatusType
     seller: ID
+    previousStatus: StatusType
 }
 input OrdersArray {
     id: ID

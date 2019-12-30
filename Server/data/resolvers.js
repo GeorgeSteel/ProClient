@@ -338,14 +338,14 @@ export const resolvers = {
         },
         updateStatus: async (root, {input}) => {
             try {
-                const { status } = input;
+                const { status, previousStatus } = input;
                 let instruction;
 
                 if (status === 'COMPLETADO') {
                     instruction = '+';
-                } //else if (status === 'CANCELADO') {
-                //     instruction = '-';                    
-                // }
+                } else if (status === 'CANCELADO' && previousStatus !== 'PENDIENTE') {
+                    instruction = '-';                    
+                }
 
                 input.order.forEach(order => {
                     Products.updateOne({ _id: order.id }, {

@@ -7,7 +7,6 @@ export default class UpdateProduct extends Component {
 
     render() {
         const { product } = this.props;
-        // console.log(product);
         return (
             <Fragment>
               <tr>

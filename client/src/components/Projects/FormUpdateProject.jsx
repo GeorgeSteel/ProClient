@@ -44,10 +44,9 @@ class FormUpdateProject extends Component {
     }
     handleStatus = e => {
         this.setState({
-            ...this.state.projectName,
+            ...this.state.status,
             status: e.target.value
-        });   
-        console.log(this.state.status);
+        });
     }
 
     updateTotal = () => {
@@ -95,7 +94,9 @@ class FormUpdateProject extends Component {
               original = this.props.project.items,                    
               generateBtn = (products.length !== 0) ?   <UpdateOrderBTN 
                                                             name={ this.state.projectName } 
-                                                            products={ this.state } 
+                                                            products={ this.state }
+                                                            previousStatus={ this.props.project.status }
+                                                            previousName={ this.props.project.name } 
                                                             idSeller={ this.props.project.seller } 
                                                             idClient={ this.props.project.client } 
                                                             idProject={ this.props.project.id } 

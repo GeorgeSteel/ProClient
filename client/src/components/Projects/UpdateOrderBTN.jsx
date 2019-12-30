@@ -5,10 +5,10 @@ import { UPDATE_PROJECT_MUTATION } from '../../queries/Projects';
 
 import { withRouter } from 'react-router-dom';
 
-const UpdateOrderBTN = ({ products: { products, total, projectName, status }, idClient, idProject, history, refetch, idSeller, name, original }) => {    
+const UpdateOrderBTN = ({ products: { products, total, projectName, status }, previousStatus, previousName, idClient, idProject, history, refetch, idSeller, name, original }) => {    
     let disabled, difference = true;
     products.forEach((product, idx) => {
-        if (difference && product.id === original[idx].id && product.quantity === original[idx].quantity) {
+        if (difference && product.id === original[idx].id && product.quantity === original[idx].quantity && previousStatus === status && previousName === name) {
             disabled = true;
         }
         else {
@@ -47,6 +47,7 @@ const UpdateOrderBTN = ({ products: { products, total, projectName, status }, id
                 };                  
                         
                 updateProject({ variables: { input } });
+
             } }>
                 Editar Proyecto
             </button>
