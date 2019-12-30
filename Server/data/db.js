@@ -24,6 +24,7 @@ const clientsSchema = new mongoose.Schema({
     age: Number,
     type: String,
     orders: Array,
+    phone: String,
     seller: mongoose.Types.ObjectId
 });
 const Clients = mongoose.model('clients', clientsSchema);
@@ -33,7 +34,8 @@ const providersSchema = new mongoose.Schema({
     lastname: String,
     company: String,
     emails: Array,
-    orders: Array
+    orders: Array,
+    phone: String
 });
 const Providers = mongoose.model('providers', providersSchema);
 

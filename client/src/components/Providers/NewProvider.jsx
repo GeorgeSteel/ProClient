@@ -8,7 +8,8 @@ export default class NewProvider extends Component {
         provider: {
             name: '',
             lastname: '',
-            company: ''
+            company: '',
+            phone: ''
         },
         emails: [],
         error: false
@@ -64,10 +65,10 @@ export default class NewProvider extends Component {
                         <form className="col-md-8 m-3" onSubmit={ (e) => {
                             e.preventDefault();
                     
-                            const { name, lastname, company } = this.state.provider;
+                            const { name, lastname, company, phone } = this.state.provider;
                             const { emails } = this.state;
                             
-                            if(name === '' || lastname === '' || company === '') {
+                            if(name === '' || lastname === '' || company === '' || phone === '') {
                                 this.setState({
                                     error: true
                                 });
@@ -82,7 +83,8 @@ export default class NewProvider extends Component {
                                 name,
                                 lastname,
                                 company,
-                                emails
+                                emails,
+                                phone
                             };
                     
                             createProvider({
@@ -112,7 +114,7 @@ export default class NewProvider extends Component {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-12">
+                                <div className="form-group col-md-8">
                                     <label>Empresa</label>
                                     <input 
                                         type="text" 
@@ -122,6 +124,18 @@ export default class NewProvider extends Component {
                                         onChange={ this.handleChange }
                                     />
                                 </div>
+                                <div className="form-group col-md-4">
+                                    <label>Teléfono</label>
+                                    <input 
+                                        type="tel" 
+                                        name="phone"
+                                        className="form-control" 
+                                        placeholder="Teléfono"
+                                        onChange={ this.handleChange }
+                                    />
+                                </div>                                
+                            </div>
+                            <div className="form-row">
                                 { this.state.emails.map((input, idx) => (
                                     <div key={ idx } className="form-group col-md-12">
                                         <label>Email: { idx + 1 }:</label>
@@ -153,7 +167,7 @@ export default class NewProvider extends Component {
                                     </button>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-success float-right">Agregar Cliente</button>
+                            <button type="submit" className="btn btn-success float-right">Agregar Proveedor</button>
                         </form>
                     ) }
                     </Mutation>

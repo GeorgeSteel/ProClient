@@ -10,7 +10,8 @@ export default class NewClient extends Component {
             lastname: '',
             company: '',
             age: '',
-            type: ''
+            type: '',
+            phone: ''
         },
         emails: [],
         error: false
@@ -67,13 +68,14 @@ export default class NewClient extends Component {
                         <form className="col-md-8 m-3" onSubmit={ (e) => {
                             e.preventDefault();
                     
-                            const { name, lastname, company, age, type } = this.state.client;
+                            const { name, lastname, company, age, type, phone } = this.state.client;
                             const { emails } = this.state;
                             
-                            if(name === '' || lastname === '' || company === '' || age === '' || type === '') {
+                            if(name === '' || lastname === '' || company === '' || age === '' || type === '' || phone === '') {
                                 this.setState({
                                     error: true
                                 });
+
                                 return;
                             } 
                                 
@@ -88,7 +90,8 @@ export default class NewClient extends Component {
                                 emails,
                                 age: Number(age),
                                 type,
-                                seller: id
+                                seller: id,
+                                phone
                             };
                     
                             createClient({
@@ -118,7 +121,7 @@ export default class NewClient extends Component {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-12">
+                                <div className="form-group col-md-8">
                                     <label>Empresa</label>
                                     <input 
                                         type="text" 
@@ -128,6 +131,18 @@ export default class NewClient extends Component {
                                         onChange={ this.handleChange }
                                     />
                                 </div>
+                                <div className="form-group col-md-4">
+                                    <label>Teléfono</label>
+                                    <input 
+                                        type="tel" 
+                                        name="phone"
+                                        className="form-control" 
+                                        placeholder="Teléfono"
+                                        onChange={ this.handleChange }
+                                    />
+                                </div>                                
+                            </div>
+                            <div className="form-row">
                                 { this.state.emails.map((input, idx) => (
                                     <div key={ idx } className="form-group col-md-12">
                                         <label>Email: { idx + 1 }:</label>

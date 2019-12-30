@@ -31,6 +31,7 @@ export const GET_CLIENT_QUERY = gql`
       lastname
       age
       type
+      phone
       emails{
         email
       }

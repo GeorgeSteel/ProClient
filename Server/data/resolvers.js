@@ -248,7 +248,8 @@ export const resolvers = {
                     emails: input.emails,
                     age: input.age,
                     type: input.type,
-                    seller: input.seller
+                    seller: input.seller,
+                    phone: input.phone
                 }); 
             } catch (error) {
                 throw new Error(error);
@@ -276,6 +277,7 @@ export const resolvers = {
                     lastname: input.lastname,
                     company: input.company,
                     emails: input.emails,
+                    phone: input.phone
                 }); 
             } catch (error) {
                 throw new Error(error);

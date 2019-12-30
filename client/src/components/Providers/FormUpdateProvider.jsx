@@ -44,7 +44,7 @@ class FormUpdate extends Component {
     }
 
     render() {
-        const { name, lastname, company } = this.state.provider;
+        const { name, lastname, company, phone } = this.state.provider;
 
         return (
             <Mutation 
@@ -57,13 +57,14 @@ class FormUpdate extends Component {
                 <form className="col-md-8 m-3" onSubmit={ e => {
                     e.preventDefault();
 
-                    const { id, name, lastname, company } = this.state.provider;
+                    const { id, name, lastname, company, phone } = this.state.provider;
 
                     const input = {
                         id,
                         name, 
                         lastname,
                         company,
+                        phone,
                         emails: this.state.emails
                     };
 
@@ -96,7 +97,7 @@ class FormUpdate extends Component {
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-8">
                             <label>Empresa</label>
                             <input 
                                 type="text" 
@@ -107,6 +108,19 @@ class FormUpdate extends Component {
                                 defaultValue={ company }
                             />
                         </div>
+                        <div className="form-group col-md-4">
+                            <label>Teléfono</label>
+                            <input 
+                                type="tel" 
+                                name="phone"
+                                className="form-control" 
+                                placeholder="Teléfono"
+                                onChange={ this.handleChange }
+                                defaultValue={ phone }
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
                         { this.state.emails.map((input, idx) => (
                             <div key={ idx } className="form-group col-md-12">
                                 <label>Email: { idx + 1 }:</label>

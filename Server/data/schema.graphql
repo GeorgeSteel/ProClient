@@ -6,6 +6,7 @@ type Client{
     emails: [Emails]
     age: Int
     type: ClientType
+    phone: String
 }
 
 type Provider {
@@ -14,6 +15,7 @@ type Provider {
     lastname: String
     company: String
     emails: [Emails]
+    phone: String
 }
 
 type Emails {
@@ -109,6 +111,7 @@ input ClientInput {
     age: Int!
     type: ClientType!
     orders: [OrderInput]
+    phone: String!
     seller: ID
 }
 """ Fields for new providers """
@@ -117,6 +120,7 @@ input ProviderInput {
     name: String!
     lastname: String!
     company: String!
+    phone: String!
     emails: [EmailsInput]
     orders: [OrderInput]
 }

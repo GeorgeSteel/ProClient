@@ -18,6 +18,7 @@ export const GET_PROVIDER_QUERY = gql`
       company
       name
       lastname
+      phone
       emails{
         email
       }
