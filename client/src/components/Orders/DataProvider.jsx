@@ -14,7 +14,7 @@ const DataProvider = ({ id }) => {
                     if(loading) return 'Loading...';
                     if(error) return `Error ${error.message}`;
 
-                    const { name, lastname, emails, company } = data.getProvider;
+                    const { name, lastname, emails, company, phone } = data.getProvider;
 
                     return(
                         <ul className="list-unstyled my-5">
@@ -23,6 +23,9 @@ const DataProvider = ({ id }) => {
                             </li>
                             <li className="border font-weight-bold p-2">
                                 Apellido: <span className="font-weight-normal">{ lastname }</span>
+                            </li>
+                            <li className="border font-weight-bold p-2">
+                                Teléfono: <span className="font-weight-normal">{ phone }</span>
                             </li>
                             <li className="border font-weight-bold p-2">
                                 Emails: <br/>

@@ -14,7 +14,7 @@ const DataClient = ({ id }) => {
                     if(loading) return 'Loading...';
                     if(error) return `Error ${error.message}`;
 
-                    const { name, lastname, age, emails, company, type } = data.getClient;
+                    const { name, lastname, age, emails, company, type, phone } = data.getClient;
 
                     return(
                         <ul className="list-unstyled my-5">
@@ -26,6 +26,9 @@ const DataClient = ({ id }) => {
                             </li>
                             <li className="border font-weight-bold p-2">
                                 Edad: <span className="font-weight-normal">{ age }</span>
+                            </li>
+                            <li className="border font-weight-bold p-2">
+                                Teléfono: <span className="font-weight-normal">{ phone }</span>
                             </li>
                             <li className="border font-weight-bold p-2">
                                 Emails: <br/>
