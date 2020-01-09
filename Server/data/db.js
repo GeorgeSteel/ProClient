@@ -8,12 +8,12 @@ mongoose.Promise = global.Promise;
 let dbURL;
 
 if (process.env.NODE_ENV === 'production') {
-    dbURL = `mongodb+srv://${process.env.USERDB}:${process.env.DBCREDENTIAL}@dcm-gdhia.mongodb.net/DCM?retryWrites=true&w=majority`;
+    dbURL = `mongodb+srv://${process.env.USERDB}:${process.env.DBACESS}@dcmags-vr5hc.mongodb.net/DCM?retryWrites=true&w=majority`;
 } else {
     dbURL = 'mongodb://localhost/clients';
 }
 
-mongoose.connect(dbURL, { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(dbURL, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
 
 // Define client's schema
 const clientsSchema = new mongoose.Schema({

@@ -11,22 +11,21 @@
   },
   "author": "Jorge Acero",
   "license": "ISC",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
+    "apollo-server-express": "^2.9.15",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "nodemon": "^1.19.1",
-    "apollo-server-express": "^2.5.0",
     "bcrypt": "^3.0.7",
-    "dotenv": "^8.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-graphql": "^0.8.0",
-    "graphql": "^14.3.1",
+    "graphql": "^14.5.8",
     "graphql-import": "^0.7.1",
-    "graphql-tools": "^4.0.4",
+    "graphql-tools": "^4.0.6",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.11"
+    "mongoose": "^5.8.4",
+    "nodemon": "^1.19.4"
   }
 }
