@@ -9,7 +9,7 @@ import ApolloClient, { InMemoryCache } from 'apollo-boost';
 let API;
 
 if (process.env.NODE_ENV === 'production') {
-  API = 'https://dcmags.herokuapp.com/graphql';
+  API = 'https://proclientgql.herokuapp.com/graphql';
 } else {
   API = '/graphql';
 }
